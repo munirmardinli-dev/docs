@@ -13,10 +13,6 @@
   "bin": {
     "munirmardinli-docs": "./lib/bin/cli.js"
   },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/munirmardinli-dev",
-    "access": "public"
-  },
   "sponsor": {
     "url": "https://linktr.ee/munirmardinli",
     "type": "individual",

@@ -24,15 +24,8 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       node_modules_cache: ${{ steps.set-cache-output.outputs.cache-hit }}
-      package_version: ${{ steps.get-version.outputs.version }}
     steps:
       - uses: actions/checkout@v5
-      - name: Get package version
-        id: get-version
-        run: |
-          VERSION=$(node -p "require('./package.json').version")
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-          echo "PACKAGE_VERSION=$VERSION" >> $GITHUB_ENV
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
