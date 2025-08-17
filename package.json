@@ -1,0 +1,78 @@
+{
+  "name": "@munirmardinli-dev/docs",
+  "description": "Documentation tools and utilities for Munir Mardinli's projects",
+  "private": false,
+  "version": "0.0.1",
+  "sideEffects": false,
+  "license": "MIT",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "enginesStrict": true,
+  "homepage": "https://munirmardinli-dev.github.io/docs",
+  "bin": {
+    "munirmardinli-docs": "./lib/bin/cli.js"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/munirmardinli-dev",
+    "access": "public"
+  },
+  "sponsor": {
+    "url": "https://linktr.ee/munirmardinli",
+    "type": "individual",
+    "name": "Munir Mardinli"
+  },
+  "publisher": "Munir Mardinli",
+  "keywords": [
+    "documentation",
+    "docs",
+    "cli",
+    "tools",
+    "utilities",
+    "developer-tools"
+  ],
+  "files": [
+    "lib"
+  ],
+  "exports": {
+    ".": {
+      "import": "./lib/index.js",
+      "require": "./lib/index.js"
+    }
+  },
+  "bugs": {
+    "url": "https://github.com/munirmardinli-dev/docs/issues",
+    "email": "Munir@Mardinli.de"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/munirmardinli-dev/docs.git",
+    "directory": "Munir Mardinli"
+  },
+  "author": {
+    "name": "Munir Mardinli",
+    "email": "Munir@Mardinli.de",
+    "url": "https://linktr.ee/munirmardinli"
+  },
+  "funding": {
+    "type": "individual",
+    "url": "https://linktr.ee/munirmardinli"
+  },
+  "readmeFilename": "README.md",
+  "contributors": [
+    {
+      "name": "Munir Mardinli",
+      "email": "Munir@Mardinli.de",
+      "url": "https://linktr.ee/munirmardinli"
+    }
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^24.2.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.7.3"
+  }
+}
