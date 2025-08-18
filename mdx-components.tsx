@@ -1,4 +1,4 @@
-import 'katex/dist/katex.min.css'
+import "katex/dist/katex.min.css";
 import React, { ComponentPropsWithoutRef } from "react";
 import Link from "next/link";
 import type { MDXComponents } from "mdx/types";
