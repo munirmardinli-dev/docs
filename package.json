@@ -5,14 +5,8 @@
   "version": "0.0.1",
   "sideEffects": false,
   "license": "MIT",
-  "type": "module",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
   "enginesStrict": true,
   "homepage": "https://munirmardinli-dev.github.io/docs",
-  "bin": {
-    "munirmardinli-docs": "./lib/bin/cli.js"
-  },
   "sponsor": {
     "url": "https://linktr.ee/munirmardinli",
     "type": "individual",
@@ -65,10 +59,36 @@
   "engines": {
     "node": ">=18.0.0"
   },
-  "dependencies": {},
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@mdx-js/loader": "3.1.0",
+    "@mdx-js/react": "3.1.0",
+    "@next/mdx": "15.4.6",
+    "@tailwindcss/postcss": "^4.1.8",
+    "@types/mdx": "2.0.13",
+    "clsx": "2.1.1",
+    "dotenv": "^16.4.7",
+    "next": "15.4.6",
+    "next-mdx-remote": "5.0.0",
+    "postgres": "^3.4.7",
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
+    "sugar-high": "^0.9.3",
+    "tailwind-merge": "3.3.1",
+    "typescript": "^5.7.3"
+  },
   "devDependencies": {
     "@types/node": "^24.2.0",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.7.3"
+    "@types/react": "19.1.10",
+    "@types/react-dom": "^18.2.19",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.4",
+    "tailwindcss": "^4.1.8",
+    "ts-node": "^10.9.1"
   }
 }
