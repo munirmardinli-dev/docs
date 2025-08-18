@@ -1,6 +1,7 @@
 import React, { ComponentPropsWithoutRef } from 'react';
 import Link from 'next/link';
-
+import type { MDXComponents } from 'mdx/types'
+import Image, { ImageProps } from 'next/image'
 import { highlight } from 'sugar-high';
 
 type HeadingProps = ComponentPropsWithoutRef<'h1'>;
@@ -108,12 +109,19 @@ const components = {
       {...props}
     />
   ),
-};
+  img: (props: ImageProps) => (
+    <Image
+      unoptimized={true}
+      priority={true}
+      {...(props)}
+    />
+  ),
+} satisfies MDXComponents;
 
 declare global {
   type MDXProvidedComponents = typeof components;
 }
 
-export function useMDXComponents(): MDXProvidedComponents {
+export function useMDXComponents(): MDXProvidedComponents & MDXComponents  {
   return components;
 }

@@ -14,7 +14,7 @@ const nextConfig: NextConfig = {
 	experimental: {
 		mdxRs: true
 	},
-};
+} satisfies NextConfig;
 
 const withMDX = createMDX({});
 
