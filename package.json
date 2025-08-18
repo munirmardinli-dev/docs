@@ -72,7 +72,7 @@
     "@tailwindcss/postcss": "^4.1.8",
     "@types/mdx": "2.0.13",
     "clsx": "2.1.1",
-    "dotenv": "^16.4.7",
+    "dotenv": "^17.2.1",
     "katex": "0.16.22",
     "next": "15.4.6",
     "next-mdx-remote": "5.0.0",
