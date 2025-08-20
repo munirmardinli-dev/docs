@@ -1,4 +1,4 @@
-import db from "@/db";
+import Database from '@/data/db.json';
 
 export const Logo = () => {
   return <>
@@ -9,7 +9,7 @@ export const Logo = () => {
       />
     </svg>
     <span style={{ marginLeft: ".4em", fontWeight: 800 }}>
-      {db.headerTitel}
+      {Database.headerTitel}
     </span>
   </>
 };

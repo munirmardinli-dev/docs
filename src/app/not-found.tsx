@@ -1,10 +1,10 @@
 import { NotFoundPage } from "nextra-theme-docs";
-import db from "@/db";
+import Database from '@/data/db.json';
 
 export default async function NotFound() {
   return (
-    <NotFoundPage content={db.submitError} labels="broken-link">
-      <h1>{db.notFoundHint}</h1>
+    <NotFoundPage content={Database.submitError} labels="broken-link">
+      <h1>{Database.notFoundHint}</h1>
     </NotFoundPage>
   );
 }
