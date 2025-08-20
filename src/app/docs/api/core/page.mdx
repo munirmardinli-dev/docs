@@ -1,0 +1,25 @@
+import { MathJax, MathJaxContext } from "nextra/components";
+
+export default function DocsLayout({ children }) {
+  return (
+    <MathJaxContext>
+      <div>
+        {children}
+        <MathJax>{"\\(2_a^2+2x_a^2 \\)"}</MathJax>
+      </div>
+    </MathJaxContext>
+  );
+}
+
+# Core Functions
+
+Essential functions for documentation processing.
+
+## processDocumentation()
+
+Processes markdown files and generates documentation.
+
+```javascript
+import { processDocumentation } from "@munirmardinli-dev/docs";
+
+const result = processDocumentation("./docs");

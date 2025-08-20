@@ -1,5 +1,5 @@
 import { NotFoundPage } from "nextra-theme-docs";
-import db from "../db";
+import db from "@/db";
 
 export default async function NotFound() {
   return (
