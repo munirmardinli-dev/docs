@@ -1,11 +1,9 @@
 {
   "name": "@munirmardinli-dev/docs",
   "description": "Documentation tools and utilities for Munir Mardinli's projects",
-  "private": false,
+  "private": true,
   "version": "0.0.1",
-  "sideEffects": false,
   "license": "MIT",
-  "enginesStrict": true,
   "homepage": "https://munirmardinli-dev.github.io/docs",
   "sponsor": {
     "url": "https://linktr.ee/munirmardinli",
@@ -21,15 +19,6 @@
     "utilities",
     "developer-tools"
   ],
-  "files": [
-    "lib"
-  ],
-  "exports": {
-    ".": {
-      "import": "./lib/index.js",
-      "require": "./lib/index.js"
-    }
-  },
   "bugs": {
     "url": "https://github.com/munirmardinli-dev/docs/issues",
     "email": "Munir@Mardinli.de"
@@ -69,16 +58,11 @@
   "dependencies": {
     "@emotion/react": "11.14.0",
     "@emotion/styled": "11.14.1",
-    "@mdx-js/loader": "3.1.0",
-    "@mdx-js/react": "3.1.0",
     "@mui/icons-material": "7.3.1",
     "@mui/material": "7.3.1",
-    "@next/mdx": "15.4.7",
-    "@types/mdx": "2.0.13",
     "dotenv": "^17.2.1",
     "katex": "0.16.22",
     "next": "15.4.7",
-    "next-mdx-remote": "5.0.0",
     "next-themes": "0.4.6",
     "nextra": "4.3.0",
     "nextra-theme-docs": "4.3.0",
