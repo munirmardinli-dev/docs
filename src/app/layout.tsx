@@ -3,6 +3,7 @@ import { ThemeProvider } from "@/components/theme"
 import { Layout, Navbar } from "nextra-theme-docs";
 import { Head, Search } from "nextra/components";
 import "nextra-theme-docs/style.css";
+import 'katex/dist/katex.min.css'
 import { getPageMap } from 'nextra/page-map'
 import { Metadata } from "next";
 import { Logo } from "@/components/logo";
