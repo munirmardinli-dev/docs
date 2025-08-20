@@ -45,3 +45,8 @@ jobs:
       - name: Set cache output
         id: set-cache-output
         run: echo "cache-hit=$(ls node_modules | wc -l | tr -d ' ')" >> $GITHUB_OUTPUT
+      - name: Build production
+        run: npm run build
+        env:
+          NODE_ENV: production
+          NEXT_PUBLIC_UI_URL: https://localhost
