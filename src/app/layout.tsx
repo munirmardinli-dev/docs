@@ -9,6 +9,7 @@ import { Metadata } from "next";
 import { Logo } from "@/components/logo";
 import localFont from 'next/font/local';
 import Database from '@/data/db.json';
+import { GoogleTagManager, GoogleTagManagerNoScript } from '@/lib/googleTag';
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_UI_URL!),
@@ -30,7 +31,8 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const sidebarData = await getPageMap();
-  
+  const baseUrl = process.env.NEXT_PUBLIC_UI_URL!;
+
   return (
     <html
       lang="en"
@@ -39,9 +41,14 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <Head>
-         <link rel="icon" href="/avatar_cropped.png" sizes="any" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="sitemap" type="application/xml" href={`${baseUrl}/sitemap.xml`} />
+        <link rel="manifest" href={`${baseUrl}/manifest.webmanifest`} />
+        <meta name="robots" content="index, follow" />
+        <GoogleTagManager />
       </Head>
       <body className="antialiased tracking-tight">
+        <GoogleTagManagerNoScript />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -59,6 +66,7 @@ export default async function RootLayout({
             pageMap={sidebarData}
             feedback={{ content: null }}
             search={<Search placeholder="Suche..." />}
+            editLink={false}
           >
             {children}
           </Layout>
