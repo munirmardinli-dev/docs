@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import { ThemeProvider } from "@/components/theme"
+import { ThemeProvider } from "@/lib/theme"
 import { Layout, Navbar } from "nextra-theme-docs";
 import { Head, Search } from "nextra/components";
 import "nextra-theme-docs/style.css";
