@@ -4,6 +4,7 @@ const withNextra = nextra({
   defaultShowCopyCode: true,
   codeHighlight: true,
   readingTime: false,
+  staticImage: true,
   latex: {
     renderer: 'katex',
     options: {
@@ -11,13 +12,19 @@ const withNextra = nextra({
         '\\RR': '\\mathbb{R}'
       },
     }
-  }
+  },
+  whiteListTagsStyling: ['table', 'thead', 'tbody', 'tr', 'th', 'td']
 });
 
 export default withNextra({
   output: 'export',
   reactStrictMode: true,
   trailingSlash: true,
+  compiler: {
+    removeConsole: {
+      exclude: ['error'],
+    },
+  },
   images: {
     unoptimized: true
   },
@@ -32,7 +39,9 @@ export default withNextra({
     }, */
   turbopack: {
     resolveAlias: {
-      'next-mdx-import-source-file': './mdx-components.tsx'
-    }
+      'next-mdx-import-source-file': './mdx-components.tsx',
+      underscore: 'lodash',
+    },
+    resolveExtensions: ['.mdx', '.tsx', '.ts', '.jsx', '.js', '.json']
   }
 });

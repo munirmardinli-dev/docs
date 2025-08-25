@@ -28,7 +28,7 @@ function extractRoutesFromPages(): string[] {
       if (
         file.endsWith('layout.tsx') ||
         file.endsWith('not-found.tsx') ||
-        file.includes('sitemap') // Exkludiere sitemap-Routen
+        file.includes('sitemap')
       ) {
         return null;
       }
@@ -46,13 +46,10 @@ function extractRoutesFromPages(): string[] {
         return null;
       }
       
-      // Entferne '/page' am Ende der Route
       let cleanedRoute = route.replace(/\/page$/, '');
       
-      // Entferne '.mdx' am Ende der Route, falls vorhanden
       cleanedRoute = cleanedRoute.replace(/\.mdx$/, '');
       
-      // Wenn die Route leer ist, setze auf '/'
       return cleanedRoute === '' ? '/' : cleanedRoute;
     })
     .filter((route): route is string => route !== null);

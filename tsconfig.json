@@ -26,6 +26,7 @@
 		"paths": {
 			"@/*": ["./src/*"],
 			"@/data/*": ["./public/data/*"],
+			"munirmardinli-styles/global.css": ["./public/styles/global.css"]
 		}
 	},
 	"include": [
@@ -36,7 +37,8 @@
 		".next/types/**/*.ts",
 		"**/src/**/*.d.ts",
 		"next.config.ts",
-		"mdx-components.ts"
+		"mdx-components.tsx",
+		"public/styles/*.css"
 	],
 	"exclude": ["node_modules"]
 }
