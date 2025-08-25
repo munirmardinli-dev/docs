@@ -83,7 +83,10 @@ jobs:
       - name: Create Version and Update Changelog
         run: |
           # Check if there are any unreleased changesets
-          if npx changeset status --output-format json | grep -q '"releases":\[\]'; then
+          # Use || true to prevent exit code 1 when no changesets are found
+          CHANGESET_STATUS=$(npx changeset status --output-format json 2>/dev/null || echo '{"releases":[]}')
+
+          if echo "$CHANGESET_STATUS" | grep -q '"releases":\[\]'; then
             echo "No unreleased changesets found, skipping version bump"
             exit 0
           fi
@@ -98,7 +101,10 @@ jobs:
         id: check-version-update
         run: |
           # Check if there are any unreleased changesets
-          if npx changeset status --output-format json | grep -q '"releases":\[\]'; then
+          # Use || true to prevent exit code 1 when no changesets are found
+          CHANGESET_STATUS=$(npx changeset status --output-format json 2>/dev/null || echo '{"releases":[]}')
+
+          if echo "$CHANGESET_STATUS" | grep -q '"releases":\[\]'; then
             echo "version-updated=false" >> $GITHUB_OUTPUT
             echo "No unreleased changesets found, skipping release creation"
           else
