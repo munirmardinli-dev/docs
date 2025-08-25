@@ -58,21 +58,21 @@ jobs:
           # Create source and target paths
           SOURCE_DIR="source-repo/${{ inputs.source-path }}"
           TARGET_DIR="docs-repo/src/app"
-          
+
           # Check if source directory exists
           if [ ! -d "$SOURCE_DIR" ]; then
             echo "❌ Source directory $SOURCE_DIR not found!"
             exit 1
           fi
-          
+
           echo "📁 Copying from $SOURCE_DIR to $TARGET_DIR"
-          
+
           # Copy all files and directories from source to target
           cp -r "$SOURCE_DIR"/* "$TARGET_DIR/" 2>/dev/null || true
-          
+
           # Remove any non-MDX/MD files to keep src/app clean
           find "$TARGET_DIR" -type f ! -name "*.mdx" ! -name "*.md" ! -name "*.tsx" ! -name "*.ts" ! -name "layout.tsx" ! -name "sitemap.ts" ! -name "robots.ts" ! -name "not-found.tsx" ! -name "manifest.ts" -delete
-          
+
           echo "✅ Files copied successfully"
 
       - name: Validate structure
@@ -101,9 +101,6 @@ jobs:
     permissions:
       pages: write
       id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Download build artifacts
         uses: actions/download-artifact@v4

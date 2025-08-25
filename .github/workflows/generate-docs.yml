@@ -17,11 +17,9 @@ on:
         type: boolean
 
 jobs:
-  build-docs:
-    uses: munirmardinli-dev/docs/.github/workflows/import-docs.yml@main
+  import-and-build:
+    uses: ./.github/workflows/import-docs.yml
     with:
       source-repo: ${{ github.repository }}
       source-path: 'docs'
       clean-target: ${{ github.event.inputs.clean-build || 'false' }}
-    secrets:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
