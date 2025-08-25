@@ -1,0 +1,30 @@
+ARG NODE_VERSION=22
+ARG NODE_ENV
+ARG NEXT_PUBLIC_UI_URL
+
+FROM node:${NODE_VERSION}-alpine
+
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV NODE_ENV=${NODE_ENV}
+ENV NEXT_PUBLIC_UI_URL=${NEXT_PUBLIC_UI_URL}
+ENV HOSTNAME="0.0.0.0"
+
+WORKDIR /app
+
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+USER nextjs
+
+COPY package*.json ./
+
+RUN npm install
+RUN npm install -g npm@latest
+
+VOLUME /app/docs
+
+COPY . .
+
+EXPOSE 3000
+
+CMD npm run dev

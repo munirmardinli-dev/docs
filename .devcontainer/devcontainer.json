@@ -1,0 +1,7 @@
+{
+	"name": "Next.js Dev",
+	"build": {
+		"context": ".",
+		"dockerfile": ".github/docker/Dockerfile.Dev"
+	}
+}
