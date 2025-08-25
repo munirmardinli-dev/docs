@@ -1,0 +1,18 @@
+{
+	"defaultSourcePath": "docs",
+	"allowedExtensions": [
+		".mdx",
+		".md"
+	],
+	"ignorePatterns": [
+		"node_modules/**",
+		".git/**",
+		"*.json",
+		"*.yaml",
+		"*.yml"
+	],
+	"requiredFrontmatter": [
+		"title",
+		"description"
+	]
+}

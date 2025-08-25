@@ -112,5 +112,8 @@
 			"path": "C:\\winserver\\Git\\bin\\bash.exe",
 			"args": ["--login", "-i"]
 		}
+	},
+	"[json]": {
+		"editor.defaultFormatter": "vscode.json-language-features"
 	}
 }
