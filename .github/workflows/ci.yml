@@ -82,18 +82,38 @@ jobs:
         run: npm ci
       - name: Create Version and Update Changelog
         run: |
+          # Check if there are any unreleased changesets
+          if npx changeset status --output-format json | grep -q '"releases":\[\]'; then
+            echo "No unreleased changesets found, skipping version bump"
+            exit 0
+          fi
+
           npx changeset version
           git add .
           git commit -m "chore: release v$(node -p "require('./package.json').version")"
           git push origin main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Check if version was updated
+        id: check-version-update
+        run: |
+          # Check if there are any unreleased changesets
+          if npx changeset status --output-format json | grep -q '"releases":\[\]'; then
+            echo "version-updated=false" >> $GITHUB_OUTPUT
+            echo "No unreleased changesets found, skipping release creation"
+          else
+            echo "version-updated=true" >> $GITHUB_OUTPUT
+          fi
+
       - name: Get version from package.json
         id: get-version
+        if: steps.check-version-update.outputs.version-updated == 'true'
         run: |
           VERSION=$(node -p "require('./package.json').version")
           echo "version=$VERSION" >> $GITHUB_OUTPUT
+
       - name: Create GitHub Release
+        if: steps.check-version-update.outputs.version-updated == 'true'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ steps.get-version.outputs.version }}
