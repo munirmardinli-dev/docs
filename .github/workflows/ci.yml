@@ -8,13 +8,15 @@ on:
       - main
 
 env:
-  NPM_VERSION: "22"
-  REGISTRY_URL: "https://npm.pkg.github.com"
+  NPM_VERSION: '22'
+  REGISTRY_URL: 'https://npm.pkg.github.com'
   REPO_NAME: ${{ github.event.repository.name }}
 
 permissions:
   contents: write
   packages: write
+  issues: write
+  pull-requests: write
   pages: write
   id-token: write
   actions: write
@@ -49,4 +51,80 @@ jobs:
         run: npm run build
         env:
           NODE_ENV: production
-          NEXT_PUBLIC_UI_URL: https://localhost
+          NEXT_PUBLIC_UI_URL: http://localhost:3000
+
+  version-and-release:
+    needs: prepare
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup Git user
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NPM_VERSION }}
+          cache: npm
+      - name: Restore cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+      - name: Install dependencies
+        run: npm ci
+      - name: Create Version and Update Changelog
+        run: |
+          # Check if there are any unreleased changesets
+          # Use || true to prevent exit code 1 when no changesets are found
+          CHANGESET_STATUS=$(npx changeset status --output-format json 2>/dev/null || echo '{"releases":[]}')
+
+          if echo "$CHANGESET_STATUS" | grep -q '"releases":\[\]'; then
+            echo "No unreleased changesets found, skipping version bump"
+            exit 0
+          fi
+
+          npx changeset version
+          git add .
+          git commit -m "chore: release v$(node -p "require('./package.json').version")"
+          git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Check if version was updated
+        id: check-version-update
+        run: |
+          # Check if there are any unreleased changesets
+          # Use || true to prevent exit code 1 when no changesets are found
+          CHANGESET_STATUS=$(npx changeset status --output-format json 2>/dev/null || echo '{"releases":[]}')
+
+          if echo "$CHANGESET_STATUS" | grep -q '"releases":\[\]'; then
+            echo "version-updated=false" >> $GITHUB_OUTPUT
+            echo "No unreleased changesets found, skipping release creation"
+          else
+            echo "version-updated=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Get version from package.json
+        id: get-version
+        if: steps.check-version-update.outputs.version-updated == 'true'
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        if: steps.check-version-update.outputs.version-updated == 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.get-version.outputs.version }}
+          name: Release v${{ steps.get-version.outputs.version }}
+          body_path: CHANGELOG.md
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

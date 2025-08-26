@@ -26,7 +26,6 @@
 		"paths": {
 			"@/*": ["./src/*"],
 			"@/data/*": ["./public/data/*"],
-			"munirmardinli-styles/global.css": ["./public/styles/global.css"]
 		}
 	},
 	"include": [

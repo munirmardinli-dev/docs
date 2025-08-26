@@ -1,0 +1,31 @@
+ARG NODE_VERSION=22
+ARG NODE_ENV
+ARG NEXT_PUBLIC_UI_URL
+
+FROM node:${NODE_VERSION}-alpine
+
+ENV NODE_ENV=${NODE_ENV}
+ENV NEXT_PUBLIC_UI_URL=${NEXT_PUBLIC_UI_URL}
+ENV HOSTNAME="0.0.0.0"
+ENV NEXT_TELEMETRY_DISABLED=1
+
+RUN mkdir -p \
+	/home/node/app/node_modules \
+	/home/node/app/src/app/docs
+
+WORKDIR /home/node/app
+
+COPY --chown=node:node package.json /home/node/app/package.json
+COPY --chown=node:node package-lock.json /home/node/app/package-lock.json
+
+RUN npm install
+
+COPY --chown=node:node . .
+
+VOLUME /home/node/app/src/app/docs
+
+EXPOSE 3000
+
+USER node
+
+CMD npm run dev
