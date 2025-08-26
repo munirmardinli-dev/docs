@@ -1,0 +1,9 @@
+git/
+.github/
+.devcontainer/
+.vscode/
+.qodo/
+.trunk/
+LICENSE
+README.md
+SECURITY.md
