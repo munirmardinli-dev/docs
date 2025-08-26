@@ -49,6 +49,9 @@ jobs:
           mkdir -p src/app
           echo "---
           title: 'test'
+          description: "Beschreibung der Seite"
+          author: "Munir Mardinli"
+          date: "2025-08-27"
           ---
           # Test" > src/app/page.mdx
       - name: Set cache output
@@ -57,7 +60,7 @@ jobs:
       - name: Build production
         run: npm run build
         env:
-          NODE_ENV: production
+          NODE_ENV: development
           NEXT_PUBLIC_UI_URL: http://localhost:3000
 
   version-and-release:
