@@ -1,0 +1,56 @@
+{
+	"Code Snippet": {
+			"prefix": "codingMDX",
+			"body": [
+					"```${1} {${2:1}} copy showLineNumbers filename=\"${4:example.js}\"",
+					"${5}",
+					"```",
+					"$0"
+			],
+			"description": "Dynamisches Code-Snippet mit konfigurierbaren Parametern"
+	},
+	"Link Snippet": {
+		"prefix": "linkMDX",
+		"body": [
+			"[${1}](${2})",
+			"$0"
+		],
+		"description": "Dynamisches Link-Snippet"
+	},
+	"Image Snippet": {
+		"prefix": "imageMDX",
+		"body": [
+			"<img src=\"${1}\" alt=\"${2}\" width=\"${3}\" height=\"${4}\" />",
+			"$0"
+		],
+		"description": "Dynamisches Image-Snippet"
+	},
+	"npm2yarn Snippet": {
+		"prefix": "npm2yarnMDX",
+		"body": [
+			"```sh npm2yarn",
+			"${1}",
+			"```",
+			"$0"
+		],
+		"description": "Dynamisches npm2yarn-Snippet"
+	},
+	"Latex Snippet": {
+		"prefix": "latexMDX",
+		"body": [
+			"```math",
+			"${1}",
+			"```",
+			"$0"
+		],
+		"description": "Dynamisches Latex-Snippet"
+	},
+	"Latex Code Snippet": {
+		"prefix": "latexCodeMDX",
+		"body": [
+			"${1}",
+			"$0"
+		],
+		"description": "Dynamisches Latex-Code-Snippet"
+	}
+}
