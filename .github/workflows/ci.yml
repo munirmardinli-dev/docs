@@ -44,6 +44,13 @@ jobs:
           restore-keys: ${{ runner.os }}-node-
       - name: Install dependencies
         run: npm install
+      - name: Create default page
+        run: |
+          mkdir -p src/app
+          echo "---
+          title: 'test'
+          ---
+          # Test" > src/app/page.mdx
       - name: Set cache output
         id: set-cache-output
         run: echo "cache-hit=$(ls node_modules | wc -l | tr -d ' ')" >> $GITHUB_OUTPUT
@@ -82,8 +89,6 @@ jobs:
         run: npm ci
       - name: Create Version and Update Changelog
         run: |
-          # Check if there are any unreleased changesets
-          # Use || true to prevent exit code 1 when no changesets are found
           CHANGESET_STATUS=$(npx changeset status --output-format json 2>/dev/null || echo '{"releases":[]}')
 
           if echo "$CHANGESET_STATUS" | grep -q '"releases":\[\]'; then
@@ -100,8 +105,6 @@ jobs:
       - name: Check if version was updated
         id: check-version-update
         run: |
-          # Check if there are any unreleased changesets
-          # Use || true to prevent exit code 1 when no changesets are found
           CHANGESET_STATUS=$(npx changeset status --output-format json 2>/dev/null || echo '{"releases":[]}')
 
           if echo "$CHANGESET_STATUS" | grep -q '"releases":\[\]'; then
