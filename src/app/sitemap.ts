@@ -1,6 +1,7 @@
 import fs from 'fs';
 import type { MetadataRoute } from 'next';
 import path from 'path';
+import getEnv from '@/lib/env';
 
 export const dynamic = 'force-static';
 
@@ -58,7 +59,7 @@ function extractRoutesFromPages(): string[] {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_UI_URL!;
+  const baseUrl = getEnv().NEXT_PUBLIC_UI_URL;
   const routes = extractRoutesFromPages();
 
   const sitemapEntries: MetadataRoute.Sitemap = routes.map((route) => ({

@@ -1,18 +1,23 @@
-import 'dotenv/config';
 import 'nextra-theme-docs/style.css';
 import 'katex/dist/katex.min.css';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+//import type {} from '@mui/x-date-pickers/themeAugmentation';
+//import type {} from '@mui/x-date-pickers/AdapterDayjs';
 import { ThemeProvider } from '@/lib/theme';
 import { Layout, Navbar } from 'nextra-theme-docs';
 import { Head, Search } from 'nextra/components';
 import { getPageMap } from 'nextra/page-map';
 import { Metadata } from 'next';
-import Database from '@/data/db.json';
 import { GoogleTagManager, GoogleTagManagerNoScript } from '@/lib/googleTag';
 import { Fragment_Mono } from 'next/font/google';
 import { NextFontWithVariable } from 'next/dist/compiled/@next/font';
+import { Suspense } from 'react';
+import '@/lib/dayjs';
+import ClientLocalizationProvider from '@/lib/clientLocalizationProvider';
+import getEnv from '@/lib/env';
 
 export const metadata: Metadata = {
-	metadataBase: new URL(process.env.NEXT_PUBLIC_UI_URL!),
+	metadataBase: new URL(getEnv().NEXT_PUBLIC_UI_URL),
 	title: '%s',
 	description: '%s',
 };
@@ -33,7 +38,7 @@ export default async function RootLayout({
 	children: React.ReactNode;
 }>) {
 	const sidebarData = await getPageMap();
-	const baseUrl = process.env.NEXT_PUBLIC_UI_URL!;
+	
 
 	return (
 		<html
@@ -47,9 +52,9 @@ export default async function RootLayout({
 				<link
 					rel="sitemap"
 					type="application/xml"
-					href={`${baseUrl}/sitemap.xml`}
+					href={`${getEnv().NEXT_PUBLIC_UI_URL}/sitemap.xml`}
 				/>
-				<link rel="manifest" href={`${baseUrl}/manifest.webmanifest`} />
+				<link rel="manifest" href={`${getEnv().NEXT_PUBLIC_UI_URL}/manifest.webmanifest`} />
 				<meta name="robots" content="index, follow" />
 				<GoogleTagManager />
 			</Head>
@@ -67,22 +72,24 @@ export default async function RootLayout({
 						navbar={
 							<Navbar
 								logoLink="/docs"
-								projectLink={Database.projectLink}
+								projectLink={getEnv().NEXT_PUBLIC_UI_URL}
 								logo={
 									<span style={{ marginLeft: '.4em', fontWeight: 800 }}>
-										{Database.headerTitel}
+										{getEnv().NEXT_PUBLIC_UI_URL}
 									</span>
 								}
 								align="left"
 							/>
 						}
-						docsRepositoryBase={`${Database.projectLink}/docs`}
+						docsRepositoryBase={`${getEnv().NEXT_PUBLIC_GIT_REPO_URL}/docs`}
 						pageMap={sidebarData}
 						feedback={{ content: null }}
 						search={<Search placeholder="Suche..." />}
 						editLink={false}
 					>
-						{children}
+						<ClientLocalizationProvider>
+							<Suspense>{children}</Suspense>
+						</ClientLocalizationProvider>
 					</Layout>
 				</ThemeProvider>
 			</body>

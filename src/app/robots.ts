@@ -1,8 +1,7 @@
 import type { MetadataRoute } from "next";
+import getEnv from "@/lib/env";
 
 export const dynamic = "force-static";
-
-const PRODUCTION_DOMIN = process.env.NEXT_PUBLIC_UI_URL!;
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -11,7 +10,7 @@ export default function robots(): MetadataRoute.Robots {
       allow: ["/"],
       disallow: ["/admin", "/privacy", "/user/*"],
     },
-    sitemap: PRODUCTION_DOMIN + `/sitemap.xml`,
-    host: PRODUCTION_DOMIN,
+    sitemap: getEnv().NEXT_PUBLIC_UI_URL + `/sitemap.xml`,
+    host: getEnv().NEXT_PUBLIC_UI_URL,
   };
 }
