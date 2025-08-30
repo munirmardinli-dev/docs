@@ -1,7 +1,7 @@
-import fs from 'fs';
-import type { MetadataRoute } from 'next';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 import getEnv from '@/lib/env';
+import type { MetadataRoute } from 'next/types';
 
 export const dynamic = 'force-static';
 

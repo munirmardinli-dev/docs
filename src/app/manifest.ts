@@ -1,4 +1,4 @@
-import type { MetadataRoute } from 'next';
+import type { MetadataRoute } from 'next/types';
 import Package from '../../package.json';
 
 export const dynamic = 'force-static';

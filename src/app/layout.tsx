@@ -1,36 +1,23 @@
+'use client';
 import 'nextra-theme-docs/style.css';
 import 'katex/dist/katex.min.css';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-//import type {} from '@mui/x-date-pickers/themeAugmentation';
-//import type {} from '@mui/x-date-pickers/AdapterDayjs';
-import { ThemeProvider } from '@/lib/theme';
 import { Layout, Navbar } from 'nextra-theme-docs';
-import { Head, Search } from 'nextra/components';
 import { getPageMap } from 'nextra/page-map';
-import { Metadata } from 'next';
 import { GoogleTagManager, GoogleTagManagerNoScript } from '@/lib/googleTag';
-import { Fragment_Mono } from 'next/font/google';
-import { NextFontWithVariable } from 'next/dist/compiled/@next/font';
-import { Suspense } from 'react';
 import '@/lib/dayjs';
 import ClientLocalizationProvider from '@/lib/clientLocalizationProvider';
+import { StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
 import getEnv from '@/lib/env';
-
-export const metadata: Metadata = {
-	metadataBase: new URL(getEnv().NEXT_PUBLIC_UI_URL),
-	title: '%s',
-	description: '%s',
-};
-
-const FontCompany: NextFontWithVariable = Fragment_Mono({
-	weight: ['400'],
-	subsets: ['latin'],
-	preload: true,
-	display: 'swap',
-	variable: '--font-fragment-mono',
-	style: ['normal', 'italic'],
-	adjustFontFallback: true,
-});
+import theme from '@/utils/theme';
+import { FontCompany } from '@/lib/font';
+import '@/app/_metadata';
+import { cacheLtr, cacheRtl } from '@/utils/cache';
+import { AppRouterCacheProvider} from '@mui/material-nextjs/v15-appRouter';
+import { Suspense } from 'react';
+import { Head } from 'nextra/components/head';
+import { Search } from 'nextra/components/search';
+import { CacheProvider } from '@emotion/react';
 
 export default async function RootLayout({
 	children,
@@ -38,13 +25,12 @@ export default async function RootLayout({
 	children: React.ReactNode;
 }>) {
 	const sidebarData = await getPageMap();
-	
-
+	let direction = 'ltr';
 	return (
 		<html
 			lang="en"
 			className={`${FontCompany.className}`}
-			dir="ltr"
+			dir={theme().direction}
 			suppressHydrationWarning
 		>
 			<Head>
@@ -54,44 +40,56 @@ export default async function RootLayout({
 					type="application/xml"
 					href={`${getEnv().NEXT_PUBLIC_UI_URL}/sitemap.xml`}
 				/>
-				<link rel="manifest" href={`${getEnv().NEXT_PUBLIC_UI_URL}/manifest.webmanifest`} />
+				<link
+					rel="manifest"
+					href={`${getEnv().NEXT_PUBLIC_UI_URL}/manifest.webmanifest`}
+				/>
 				<meta name="robots" content="index, follow" />
+				<meta name="theme-color" content="#000000" />
 				<GoogleTagManager />
 			</Head>
 			<body className="antialiased tracking-tight">
 				<GoogleTagManagerNoScript />
-				<ThemeProvider
-					attribute="class"
-					defaultTheme="system"
-					enableSystem
-					enableColorScheme
-					storageKey="theme"
-				>
-					<Layout
-						sidebar={{ autoCollapse: true }}
-						navbar={
-							<Navbar
-								logoLink="/docs"
-								projectLink={getEnv().NEXT_PUBLIC_UI_URL}
-								logo={
-									<span style={{ marginLeft: '.4em', fontWeight: 800 }}>
-										{getEnv().NEXT_PUBLIC_UI_URL}
-									</span>
-								}
-								align="left"
-							/>
-						}
-						docsRepositoryBase={`${getEnv().NEXT_PUBLIC_GIT_REPO_URL}/docs`}
-						pageMap={sidebarData}
-						feedback={{ content: null }}
-						search={<Search placeholder="Suche..." />}
-						editLink={false}
+				<AppRouterCacheProvider options={{ enableCssLayer: true }}>
+				<StyledEngineProvider enableCssLayer>
+					<CacheProvider
+						value={theme().direction === 'rtl' ? cacheRtl : cacheLtr}
 					>
-						<ClientLocalizationProvider>
-							<Suspense>{children}</Suspense>
-						</ClientLocalizationProvider>
-					</Layout>
-				</ThemeProvider>
+						<ThemeProvider
+							theme={theme()}
+							defaultMode="system"
+							colorSchemeStorageKey="theme"
+						>
+							<Suspense  fallback={<div>Loading...</div>} name='layout'>
+							<Layout
+								sidebar={{ autoCollapse: true }}
+								navbar={
+									<Navbar
+										logoLink="/docs"
+										projectLink={getEnv().NEXT_PUBLIC_UI_URL}
+										logo={
+											<span style={{ marginLeft: '.4em', fontWeight: 800 }}>
+												{getEnv().NEXT_PUBLIC_HEADER_TITEL}
+											</span>
+										}
+										align="left"
+									/>
+								}
+								docsRepositoryBase={`${getEnv().NEXT_PUBLIC_GIT_REPO_URL}/docs`}
+								pageMap={sidebarData}
+								feedback={{ content: null }}
+								search={<Search placeholder="Suche..." />}
+								editLink={false}
+							>
+								<ClientLocalizationProvider>
+									{children}
+								</ClientLocalizationProvider>
+							</Layout>
+							</Suspense>
+						</ThemeProvider>
+					</CacheProvider>
+					</StyledEngineProvider>
+				</AppRouterCacheProvider>
 			</body>
 		</html>
 	);

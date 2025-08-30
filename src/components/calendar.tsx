@@ -1,17 +1,11 @@
 'use client';
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import {
-	Calendar,
-	CalendarProps,
-	dayjsLocalizer,
-	Views,
-	Event,
-} from 'react-big-calendar';
+import { dayjsLocalizer, Views, Event } from 'react-big-calendar';
 import dayjs from '@/lib/dayjs';
-import React from 'react';
-import { Stack, styled } from '@mui/material';
+import { Stack } from '@mui/material';
 import { type CalendarEvent, type RBCCalendarProps } from '@/types/calendar';
+import { StyledCalendar } from '@/styles/calendar';
 
 export default function MyCalendar({
 	props: {
@@ -80,30 +74,3 @@ export default function MyCalendar({
 		</Stack>
 	);
 }
-
-const StyledCalendar = styled(Calendar)<CalendarProps>(() => ({
-	'.rbc-off-range-bg': {
-		background: 'rgb(var(--nextra-bg))',
-	},
-	'.rbc-off-range': {
-		color: '#fff',
-	},
-	'.rbc-toolbar button': {
-		color: '1px solid rgb(var(--nextra-bg))',
-	},
-	'.rbc-toolbar button:active, .rbc-toolbar button.rbc-active': {
-		color: '#000',
-	},
-	'.rbc-today': {
-		backgroundColor: 'transparent',
-	},
-	// @ts-ignore
-	'.rbc-toolbar button:active, .rbc-toolbar button.rbc-active': {
-		backgroundColor: '#fff',
-		color: '#000',
-	},
-	'.rbc-toolbar button:hover': {
-		backgroundColor: '#fff',
-		color: '#000',
-	},
-}));
