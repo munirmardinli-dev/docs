@@ -14,7 +14,7 @@ import {
 	Toolbar,
 	GridValidRowModel,
 } from '@mui/x-data-grid';
-import { StyledDataGrid } from '@/styles/gridData';
+import GridDataStyleManager from '@/styles/gridData';
 
 const columns: GridColDef<GridRowModel>[] = [
 	{ field: 'id', headerName: 'ID', width: 90 },
@@ -49,67 +49,81 @@ const columns: GridColDef<GridRowModel>[] = [
 	},
 ];
 
-export default function Table({
-	row
-}: {
-	row:  GridRowModel[];
-}): React.JSX.Element {
-	const [density, setDensity] = React.useState<GridDensity>('compact');
-	const PAGE_SIZE: number = 8;
-	return (
-		<Box>
-			<StyledDataGrid
-				rows={row}
-				columns={columns}
-				getRowClassName={(params) =>
-					params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'
-				}
-				density={density}
-				onDensityChange={(newDensity) => setDensity(newDensity)}
-				initialState={{
-					pagination: {
-						paginationModel: {
-							pageSize: PAGE_SIZE,
-							page: 0,
+export default class Table extends React.Component<{row: GridRowModel[]}> {
+	state = {
+		density: 'compact' as GridDensity,
+	};
+
+	constructor(props: {row: GridRowModel[]}) {
+		super(props);
+	}
+
+	handleDensityChange = (newDensity: GridDensity) => {
+		this.setState({ density: newDensity });
+	};
+
+	render() {
+		const { row } = this.props;
+		const { density } = this.state;
+		const PAGE_SIZE: number = 8;
+
+		return (
+			<Box>
+				<GridDataStyleManager.StyledDataGrid
+					rows={row}
+					columns={columns}
+					getRowClassName={(params) =>
+						params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'
+					}
+					density={density}
+					onDensityChange={this.handleDensityChange}
+					initialState={{
+						pagination: {
+							paginationModel: {
+								pageSize: PAGE_SIZE,
+								page: 0,
+							},
 						},
-					},
-				}}
-				localeText={{
-					toolbarQuickFilterPlaceholder: 'Suche',
-				}}
-				pageSizeOptions={[PAGE_SIZE]}
-				getRowId={(row: GridValidRowModel) => row.id}
-				columnBufferPx={100}
-				disableRowSelectionOnClick
-				disableColumnMenu
-				disableColumnFilter
-				disableColumnSorting
-				disableColumnResize
-				disableMultipleRowSelection
-				disableColumnSelector
-				columnVisibilityModel={{
-					id: false,
-				}}
-				showToolbar
-				slots={{ toolbar: CustomToolbar }}
-			/>
-		</Box>
-	);
+					}}
+					localeText={{
+						toolbarQuickFilterPlaceholder: 'Suche',
+					}}
+					pageSizeOptions={[PAGE_SIZE]}
+					getRowId={(row: GridValidRowModel) => row.id}
+					columnBufferPx={100}
+					disableRowSelectionOnClick
+					disableColumnMenu
+					disableColumnFilter
+					disableColumnSorting
+					disableColumnResize
+					disableMultipleRowSelection
+					disableColumnSelector
+					columnVisibilityModel={{
+						id: false,
+					}}
+					showToolbar
+					slots={{ toolbar: CustomToolbar }}
+				/>
+			</Box>
+		);
+	}
 }
 
-function CustomToolbar() {
-	return (
-		<Toolbar>
-			<Tooltip title="Download as CSV">
-				<ExportCsv render={<ToolbarButton />}>
-					<FileDownloadIcon fontSize="small" />
-				</ExportCsv>
-			</Tooltip>
-			<Tooltip title="Print">
-				<ExportPrint render={<ToolbarButton />}>
-					<PrintIcon fontSize="small" />
-				</ExportPrint>
-			</Tooltip>
-		</Toolbar>
-	);
+class CustomToolbar extends React.Component {
+	render() {
+		return (
+			<Toolbar>
+				<Tooltip title="Download as CSV">
+					<ExportCsv render={<ToolbarButton />}>
+						<FileDownloadIcon fontSize="small" />
+					</ExportCsv>
+				</Tooltip>
+				<Tooltip title="Print">
+					<ExportPrint render={<ToolbarButton />}>
+						<PrintIcon fontSize="small" />
+					</ExportPrint>
+				</Tooltip>
+			</Toolbar>
+		);
+	}
 }

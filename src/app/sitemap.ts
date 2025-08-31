@@ -1,73 +1,80 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import getEnv from '@/lib/env';
+import EnvManager from '@/lib/env';
 import type { MetadataRoute } from 'next/types';
 
 export const dynamic = 'force-static';
 
-function getAllFiles(dir: string, fileList: string[] = []): string[] {
-  const files = fs.readdirSync(dir);
+class SitemapManager {
+	static env = EnvManager.getEnv<string>();
 
-  files.forEach((file) => {
-    const filePath = path.join(dir, file);
-    if (fs.statSync(filePath).isDirectory()) {
-      fileList = getAllFiles(filePath, fileList);
-    } else {
-      fileList.push(filePath);
-    }
-  });
+	static getAllFiles(dir: string, fileList: string[] = []): string[] {
+		const files = fs.readdirSync(dir);
 
-  return fileList;
-}
+		files.forEach((file) => {
+			const filePath = path.join(dir, file);
+			if (fs.statSync(filePath).isDirectory()) {
+				fileList = SitemapManager.getAllFiles(filePath, fileList);
+			} else {
+				fileList.push(filePath);
+			}
+		});
 
-function extractRoutesFromPages(): string[] {
-  const appDir = path.join(process.cwd(), 'src/app');
-  const files = getAllFiles(appDir);
+		return fileList;
+	}
 
-  const routes = files
-    .map((file) => {
-      if (
-        file.endsWith('layout.tsx') ||
-        file.endsWith('not-found.tsx') ||
-        file.includes('sitemap')
-      ) {
-        return null;
-      }
+	static extractRoutesFromPages(): string[] {
+		const appDir = path.join(process.cwd(), 'src/app');
+		const files = SitemapManager.getAllFiles(appDir);
 
-      const route = file
-        .replace(appDir, '')
-        .replace(/\.(tsx|js|ts)$/, '')
-        .replace(/\\/g, '/');
-      
-      if (
-        route.startsWith('/_') ||
-        route.includes('[') ||
-        route.includes(']')
-      ) {
-        return null;
-      }
-      
-      let cleanedRoute = route.replace(/\/page$/, '');
-      
-      cleanedRoute = cleanedRoute.replace(/\.mdx$/, '');
-      
-      return cleanedRoute === '' ? '/' : cleanedRoute;
-    })
-    .filter((route): route is string => route !== null);
+		const routes = files
+			.map((file) => {
+				if (
+					file.endsWith('layout.tsx') ||
+					file.endsWith('not-found.tsx') ||
+					file.includes('sitemap')
+				) {
+					return null;
+				}
 
-  return routes;
+				const route = file
+					.replace(appDir, '')
+					.replace(/\.(tsx|js|ts)$/, '')
+					.replace(/\\/g, '/');
+
+				if (
+					route.startsWith('/_') ||
+					route.includes('[') ||
+					route.includes(']')
+				) {
+					return null;
+				}
+
+				let cleanedRoute = route.replace(/\/page$/, '');
+
+				cleanedRoute = cleanedRoute.replace(/\.mdx$/, '');
+
+				return cleanedRoute === '' ? '/' : cleanedRoute;
+			})
+			.filter((route): route is string => route !== null);
+
+		return routes;
+	}
+
+	static generateSitemap(): Promise<MetadataRoute.Sitemap> {
+		const routes = SitemapManager.extractRoutesFromPages();
+
+		const sitemapEntries: MetadataRoute.Sitemap = routes.map((route) => ({
+			url: `${SitemapManager.env.NEXT_PUBLIC_UI_URL}${route}`,
+			lastModified: new Date(),
+			changeFrequency: 'weekly',
+			priority: route === '/' ? 1 : 0.8,
+		}));
+
+		return Promise.resolve(sitemapEntries);
+	}
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = getEnv().NEXT_PUBLIC_UI_URL;
-  const routes = extractRoutesFromPages();
-
-  const sitemapEntries: MetadataRoute.Sitemap = routes.map((route) => ({
-    url: `${baseUrl}${route}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly',
-    priority: route === '/' ? 1 : 0.8,
-  }));
-
-  return sitemapEntries;
+	return SitemapManager.generateSitemap();
 }

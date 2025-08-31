@@ -1,5 +1,7 @@
 import nextra from "nextra";
-import getEnv from "./src/lib/env";
+import EnvManager from "@/lib/env";
+
+const env = EnvManager.getEnv<string>();
 
 const withNextra = nextra({
   defaultShowCopyCode: true,
@@ -28,7 +30,7 @@ export default withNextra({
   },
   images: {
     unoptimized: true,
-    domains: [getEnv().NEXT_PUBLIC_UI_URL]
+    domains: [env.NEXT_PUBLIC_UI_URL]
   },
   /*   async redirects() {
       return [

@@ -1,8 +1,8 @@
-import 'dotenv/config';
 import fs from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
-import PackageJson from '../../../package.json';
+import PackageJson from 'package.json';
+import EnvManager from '@/lib/env';
 
 export const dynamic = 'force-static';
 
@@ -37,7 +37,7 @@ function getAllMdxFiles(dir: string, fileList: string[] = []): string[] {
 }
 
 function generateRSS(): void {
-	const baseUrl = process.env.NEXT_PUBLIC_UI_URL;
+	const baseUrl = EnvManager.getEnv<string>().NEXT_PUBLIC_UI_URL;
 
 	if (!baseUrl) {
 		console.error('NEXT_PUBLIC_UI_URL environment variable is not set');

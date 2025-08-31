@@ -13,14 +13,24 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 
-dayjs.extend(utc);
-dayjs.extend(timezone);
-dayjs.extend(advancedFormat);
-dayjs.extend(isSameOrAfter);
-dayjs.extend(relativeTime);
-dayjs.extend(duration);
-dayjs.extend(customParseFormat);
-dayjs.extend(isBetween);
-dayjs.extend(calendar);
+export default class DayjsManager {
+	static instance = dayjs;
 
-export default dayjs;
+	static initialize() {
+		DayjsManager.instance.extend(utc);
+		DayjsManager.instance.extend(timezone);
+		DayjsManager.instance.extend(advancedFormat);
+		DayjsManager.instance.extend(isSameOrAfter);
+		DayjsManager.instance.extend(relativeTime);
+		DayjsManager.instance.extend(duration);
+		DayjsManager.instance.extend(customParseFormat);
+		DayjsManager.instance.extend(isBetween);
+		DayjsManager.instance.extend(calendar);
+
+		return DayjsManager.instance;
+	}
+
+	static getDayjs() {
+		return DayjsManager.instance;
+	}
+}

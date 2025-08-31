@@ -3,7 +3,7 @@ import { createTheme, Direction } from '@mui/material/styles';
 import type {} from '@mui/x-data-grid/themeAugmentation';
 import type {} from '@mui/x-date-pickers/themeAugmentation';
 import type {} from '@mui/x-date-pickers/AdapterDayjs';
-import { FontCompany } from '@/lib/font';
+import FontManager from '@/lib/font';
 import { bgBG, arSD, deDE, enUS } from '@mui/x-data-grid/locales';
 import {
 	bgBG as pickersBgBG,
@@ -31,7 +31,7 @@ const theme = (direction?: Direction) => {
 		spacing: 4,
 		typography: {
 			fontFamily: [
-				FontCompany.style.fontFamily,
+				FontManager.FontCompany.style.fontFamily,
 				'-apple-system',
 				'BlinkMacSystemFont',
 				'"Segoe UI"',
@@ -44,7 +44,7 @@ const theme = (direction?: Direction) => {
 				'"Segoe UI Symbol"',
 			].join(','),
 			h3: {
-				fontFamily: FontCompany.style.fontFamily,
+				fontFamily: FontManager.FontCompany.style.fontFamily,
 				fontSize: '1.2rem',
 				'@media (min-width:600px)': {
 					fontSize: '1.5rem',
@@ -54,15 +54,15 @@ const theme = (direction?: Direction) => {
 				},
 			},
 			body1: {
-				fontFamily: FontCompany.style.fontFamily,
+				fontFamily: FontManager.FontCompany.style.fontFamily,
 				fontWeight: 500,
 			},
 			button: {
-				fontFamily: FontCompany.style.fontFamily,
+				fontFamily: FontManager.FontCompany.style.fontFamily,
 				fontStyle: 'italic',
 			},
 			subtitle1: {
-				fontFamily: FontCompany.style.fontFamily,
+				fontFamily: FontManager.FontCompany.style.fontFamily,
 				fontSize: 12,
 			},
 		},
