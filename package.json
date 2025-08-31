@@ -53,7 +53,8 @@
     "build": "next build && npm run rss",
     "start": "next start",
     "rss": "tsx src/app/rss.xml/router.ts",
-    "postbuild": "pagefind --site .next/server/app --output-path out/_pagefind"
+    "postbuild": "pagefind --site .next/server/app --output-path out/_pagefind",
+    "dev:docker": "docker compose up -d"
   },
   "dependencies": {
     "@emotion/cache": "11.14.0",
