@@ -1,5 +1,11 @@
 # @munirmardinli-dev/docs
 
+## 0.0.4
+
+### Patch Changes
+
+- b607cdd: change the project to class notation
+
 ## 0.0.3
 
 ### Patch Changes
