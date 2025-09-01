@@ -6,76 +6,94 @@ import EnvManager from '@/lib/env';
 
 export const dynamic = 'force-static';
 
-interface RSSItem {
-	title: string;
-	description: string;
-	author: string;
-	date: Date;
-	url: string;
-}
+class RSSRouterManager {
+	static RSSItem = class {
+		title: string;
+		description: string;
+		author: string;
+		date: Date;
+		url: string;
 
-interface Frontmatter {
-	title?: string;
-	description?: string;
-	author?: string;
-	date?: string;
-}
-
-function getAllMdxFiles(dir: string, fileList: string[] = []): string[] {
-	const files = fs.readdirSync(dir);
-
-	files.forEach((file) => {
-		const filePath = path.join(dir, file);
-		if (fs.statSync(filePath).isDirectory()) {
-			fileList = getAllMdxFiles(filePath, fileList);
-		} else if (file.endsWith('.mdx')) {
-			fileList.push(filePath);
+		constructor(
+			title: string,
+			description: string,
+			author: string,
+			date: Date,
+			url: string
+		) {
+			this.title = title;
+			this.description = description;
+			this.author = author;
+			this.date = date;
+			this.url = url;
 		}
-	});
+	};
 
-	return fileList;
-}
+	static getAllMdxFiles(dir: string, fileList: string[] = []): string[] {
+		const files = fs.readdirSync(dir);
 
-function generateRSS(): void {
-	const baseUrl = EnvManager.getEnv<string>().NEXT_PUBLIC_UI_URL;
+		files.forEach((file) => {
+			const filePath = path.join(dir, file);
+			if (fs.statSync(filePath).isDirectory()) {
+				fileList = RSSRouterManager.getAllMdxFiles(filePath, fileList);
+			} else if (file.endsWith('.mdx')) {
+				fileList.push(filePath);
+			}
+		});
 
-	if (!baseUrl) {
-		console.error('NEXT_PUBLIC_UI_URL environment variable is not set');
-		return;
+		return fileList;
 	}
 
-	const appDir = path.join(process.cwd(), 'src/app');
-	const mdxFiles = getAllMdxFiles(appDir);
+	static generateRSS(): void {
+		const baseUrl = EnvManager.getEnv<string>().NEXT_PUBLIC_UI_URL;
 
-	const rssItems: RSSItem[] = mdxFiles
-		.map((filePath) => {
-			const content = fs.readFileSync(filePath, 'utf8');
-			const { data: frontmatter } = matter(content) as { data: Frontmatter };
+		if (!baseUrl) {
+			console.error('NEXT_PUBLIC_UI_URL environment variable is not set');
+			return;
+		}
 
-			const route = filePath
-				.replace(appDir, '')
-				.replace(/\.mdx$/, '')
-				.replace(/\\/g, '/')
-				.replace(/\/page$/, '');
+		const appDir = path.join(process.cwd(), 'src/app');
+		const mdxFiles = RSSRouterManager.getAllMdxFiles(appDir);
 
-			const url = route === '' ? '/' : route;
+		const rssItems: InstanceType<typeof RSSRouterManager.RSSItem>[] = mdxFiles
+			.map((filePath) => {
+				const content = fs.readFileSync(filePath, 'utf8');
+				const { data: frontmatter } = matter(content) as {
+					data: {
+						title?: string;
+						description?: string;
+						author?: string;
+						date?: string;
+					};
+				};
 
-			if (!frontmatter.title || !frontmatter.date) {
-				return null;
-			}
+				const route = filePath
+					.replace(appDir, '')
+					.replace(/\.mdx$/, '')
+					.replace(/\\/g, '/')
+					.replace(/\/page$/, '');
 
-			return {
-				title: frontmatter.title,
-				description: frontmatter.description || '',
-				author: frontmatter.author || 'Unknown',
-				date: new Date(frontmatter.date),
-				url: `${baseUrl}${url}`,
-			};
-		})
-		.filter((item): item is RSSItem => item !== null)
-		.sort((a, b) => b.date.getTime() - a.date.getTime());
+				const url = route === '' ? '/' : route;
 
-	const rssContent = `<?xml version="1.0" encoding="UTF-8"?>
+				if (!frontmatter.title || !frontmatter.date) {
+					return null;
+				}
+
+				return new RSSRouterManager.RSSItem(
+					frontmatter.title,
+					frontmatter.description || '',
+					frontmatter.author || 'Unknown',
+					new Date(frontmatter.date),
+					`${baseUrl}${url}`
+				);
+			})
+			.filter(
+				(item): item is InstanceType<typeof RSSRouterManager.RSSItem> =>
+					item !== null
+			)
+			.sort((a, b) => b.date.getTime() - a.date.getTime());
+
+		const rssContent = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>${PackageJson.name}</title>
@@ -100,13 +118,15 @@ function generateRSS(): void {
   </channel>
 </rss>`;
 
-	if (process.env.NODE_ENV !== 'production') {
-		const outputPath = path.join(process.cwd(), 'out/rss.xml');
-		fs.writeFileSync(outputPath, rssContent);
-		console.log('RSS Feed generiert:', outputPath);
-	} else {
-		console.log('RSS Feed wird in Produktion nicht generiert');
+		if (process.env.NODE_ENV !== 'production') {
+			const outputPath = path.join(process.cwd(), 'out/rss.xml');
+			fs.writeFileSync(outputPath, rssContent);
+			console.log('RSS Feed generiert:', outputPath);
+		} else {
+			console.log('RSS Feed wird in Produktion nicht generiert');
+		}
 	}
 }
 
-generateRSS();
+// RSS-Generierung beim Import ausführen
+RSSRouterManager.generateRSS();

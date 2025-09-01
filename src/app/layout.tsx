@@ -55,7 +55,11 @@ export default async function RootLayout({
 				<AppRouterCacheProvider options={{ enableCssLayer: true }}>
 					<StyledEngineProvider enableCssLayer>
 						<CacheProvider
-							value={theme().direction === 'rtl' ? CacheManager.cacheRtl : CacheManager.cacheLtr}
+							value={
+								theme().direction === 'rtl'
+									? CacheManager.cacheRtl
+									: CacheManager.cacheLtr
+							}
 						>
 							<ThemeProvider
 								theme={theme()}
