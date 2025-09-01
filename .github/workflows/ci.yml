@@ -43,7 +43,24 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
           restore-keys: ${{ runner.os }}-node-
       - name: Install dependencies
-        run: npm install
+        run: npm ci
+      - name: Set cache output
+        id: set-cache-output
+        run: echo "cache-hit=$(ls node_modules | wc -l | tr -d ' ')" >> $GITHUB_OUTPUT
+  
+
+  build:
+    needs: prepare
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Restore cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            .npm
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
       - name: Create default page
         run: |
           mkdir -p src/app
@@ -63,7 +80,7 @@ jobs:
           NEXT_PUBLIC_GIT_REPO_URL: https://github.com/munir-mardinli/docs
 
   version-and-release:
-    needs: prepare
+    needs: build
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     steps:
@@ -85,10 +102,8 @@ jobs:
         with:
           path: |
             node_modules
-            ~/.npm
+            .npm
           key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
-      - name: Install dependencies
-        run: npm ci
       - name: Create Version and Update Changelog
         run: |
           CHANGESET_STATUS=$(npx changeset status --output-format json 2>/dev/null || echo '{"releases":[]}')
