@@ -139,4 +139,3 @@ vite.config.ts.timestamp-*
 .qodo
 _pagefind
 .trunk
-src/app/**/*.mdx
