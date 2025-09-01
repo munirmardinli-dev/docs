@@ -54,6 +54,16 @@ jobs:
         run: |
           cp -r ./*.mdx src/app/ || true
           cp -r ./*.md src/app/ || true
+      - name: Create default page
+        run: |
+          mkdir -p src/app
+          echo "---
+          title: 'test'
+          description: "Beschreibung der Seite"
+          author: "Munir Mardinli"
+          date: "2025-08-27"
+          ---
+          # Test" > src/app/page.mdx
       - name: Run build
         run: npm run build
         env:
