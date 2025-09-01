@@ -1,4 +1,4 @@
-name: Test CI/CD Pipeline
+name: Docs CI/CD Pipeline
 
 on:
   push:
@@ -22,54 +22,50 @@ env:
   REGISTRY_URL: 'https://npm.pkg.github.com'
   REPO_NAME: ${{ github.event.repository.name }}
   NEXT_PUBLIC_UI_URL: http://localhost:3000
-  NEXT_PUBLIC_HEADER_TITEL: docs
-  NEXT_PUBLIC_GIT_REPO_URL: https://github.com/munirmardinli-dev/docs
+  NEXT_PUBLIC_HEADER_TITEL: Docs Management
+  NEXT_PUBLIC_GIT_REPO_URL: https://github.com/munirmardinli/docs
 
 jobs:
   prepare:
     runs-on: ubuntu-latest
     steps:
-      - name: Clone GitHub Repository
+      - name: Checkout current repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      
+      - name: List initial directory contents
+        run: ls -la
+      
+      - name: Clone main docs repository
         run: |
-          git clone https://github.com/munirmardinli-dev/docs.git
-          cd docs
-      - uses: actions/checkout@v5
+          git clone https://github.com/munirmardinli-dev/docs.git docs-app
+          ls -la docs-app/
+      
+      - name: Change to docs-app directory
+        run: cd docs-app
+        working-directory: docs-app
+      
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NPM_VERSION }}
           cache: npm
+          cache-dependency-path: docs-app/package-lock.json
+      
       - name: Cache node modules
         id: cache-node-modules
         uses: actions/cache@v4
         with:
-          path: |
-            node_modules
-            .npm
-            .npmrc
-          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
-          restore-keys: ${{ runner.os }}-node-
+          path: docs-app/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('docs-app/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      
       - name: Install dependencies
         run: npm ci
-      - name: Remove .env.local
-        run: |
-          rm -f .env.local
-          echo ".env.local removed if it existed"
-          ls -la
-      - name: Copy MDX Files
-        run: |
-          cp -r ./*.mdx src/app/ || true
-          cp -r ./*.md src/app/ || true
-      - name: Create default page
-        run: |
-          mkdir -p src/app
-          echo "---
-          title: 'test'
-          description: "Beschreibung der Seite"
-          author: "Munir Mardinli"
-          date: "2025-08-27"
-          ---
-          # Test" > src/app/page.mdx
+        working-directory: docs-app
+        
       - name: Production environment variables
         run: |
           echo "NODE_ENV=production" > .env.production
@@ -77,9 +73,22 @@ jobs:
           echo "NEXT_PUBLIC_HEADER_TITEL=$NEXT_PUBLIC_HEADER_TITEL" >> .env.production
           echo "NEXT_PUBLIC_GIT_REPO_URL=$NEXT_PUBLIC_GIT_REPO_URL" >> .env.production
           cat .env.production
-      - name: Run build
+        working-directory: docs-app
+        env:
+          NEXT_PUBLIC_UI_URL: ${{ env.NEXT_PUBLIC_UI_URL }}
+          NEXT_PUBLIC_HEADER_TITEL: ${{ env.NEXT_PUBLIC_HEADER_TITEL }}
+          NEXT_PUBLIC_GIT_REPO_URL: ${{ env.NEXT_PUBLIC_GIT_REPO_URL }}
+
+      - name: Copy MDX files from docs folder to Next.js app
         run: |
-          npm run build
+          # Kopiere alle MDX Dateien aus dem docs Ordner
+          cp -r ../docs/*.mdx src/app/ || true
+          ls -la src/app/
+        working-directory: docs-app
+
+      - name: Run build
+        run: npm run build
+        working-directory: docs-app
         env:
           NODE_ENV: production
           NEXT_PUBLIC_UI_URL: ${{ env.NEXT_PUBLIC_UI_URL }}
