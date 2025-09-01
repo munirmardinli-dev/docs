@@ -47,15 +47,14 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
           restore-keys: ${{ runner.os }}-node-
       - name: Install dependencies
-        working-directory: docs
-        run: npm ci
+        run: |
+          ls -la
+          npm ci
       - name: Copy MDX Files
-        working-directory: docs
         run: |
           cp -r ./*.mdx src/app/ || true
           cp -r ./*.md src/app/ || true
       - name: Run build
-        working-directory: docs
         run: npm run build
         env:
           NODE_ENV: production
