@@ -1,5 +1,11 @@
 # @munirmardinli-dev/docs
 
+## 0.0.6
+
+### Patch Changes
+
+- 7876cb3: update test workflow
+
 ## 0.0.5
 
 ### Patch Changes
