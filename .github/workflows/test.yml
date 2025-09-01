@@ -1,0 +1,28 @@
+name: Test CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  packages: write
+  issues: write
+  pull-requests: write
+  pages: write
+  id-token: write
+  actions: write
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone GitHub Repository
+        run: |
+          git clone https://github.com/munirmardinli/docs.git
+          cd docs
+          ls -la
