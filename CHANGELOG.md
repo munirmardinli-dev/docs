@@ -1,5 +1,11 @@
 # @munirmardinli-dev/docs
 
+## 0.0.5
+
+### Patch Changes
+
+- 5e9d7c8: change to class II
+
 ## 0.0.4
 
 ### Patch Changes
