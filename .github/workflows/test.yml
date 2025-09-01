@@ -23,6 +23,6 @@ jobs:
     steps:
       - name: Clone GitHub Repository
         run: |
-          git clone https://github.com/munirmardinli/docs.git
+          git clone https://github.com/munirmardinli-dev/docs.git
           cd docs
           ls -la
