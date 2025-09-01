@@ -31,6 +31,7 @@ jobs:
           git clone https://github.com/munirmardinli-dev/docs.git
           cd docs
           ls -la
+      - uses: actions/checkout@v5
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
