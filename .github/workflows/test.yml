@@ -30,7 +30,6 @@ jobs:
         run: |
           git clone https://github.com/munirmardinli-dev/docs.git
           cd docs
-          ls -la
       - uses: actions/checkout@v5
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -47,9 +46,7 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
           restore-keys: ${{ runner.os }}-node-
       - name: Install dependencies
-        run: |
-          ls -la
-          npm ci
+        run: npm ci
       - name: Copy MDX Files
         run: |
           cp -r ./*.mdx src/app/ || true
@@ -65,7 +62,9 @@ jobs:
           ---
           # Test" > src/app/page.mdx
       - name: Run build
-        run: npm run build
+        run: |
+          ls -la
+          npm run build
         env:
           NODE_ENV: production
           NEXT_PUBLIC_UI_URL: http://localhost:3000
