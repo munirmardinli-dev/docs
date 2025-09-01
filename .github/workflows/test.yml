@@ -63,8 +63,8 @@ jobs:
           # Test" > src/app/page.mdx
       - name: Run build
         run: |
-          ls -la
           npm run build
+          ls -la
         env:
           NODE_ENV: production
           NEXT_PUBLIC_UI_URL: http://localhost:3000
