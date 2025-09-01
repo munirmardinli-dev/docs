@@ -32,33 +32,31 @@ jobs:
       - name: Clone GitHub Repository
         run: |
           git clone https://github.com/munirmardinli-dev/docs.git
+          cd docs
       - uses: actions/checkout@v5
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NPM_VERSION }}
           cache: npm
-          cache-dependency-path: 'docs/package-lock.json'
       - name: Cache node modules
         id: cache-node-modules
         uses: actions/cache@v4
         with:
           path: |
-            docs/node_modules
-            docs/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('docs/package-lock.json') }}
+            node_modules
+            .npm
+            .npmrc
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
           restore-keys: ${{ runner.os }}-node-
       - name: Install dependencies
-        working-directory: ./docs
         run: npm ci
       - name: Remove .env.local
-        working-directory: ./docs
         run: |
           rm -f .env.local
           echo ".env.local removed if it existed"
           ls -la
       - name: Copy MDX Files
-        working-directory: ./docs
         run: |
           cp -r ./*.mdx src/app/ || true
           cp -r ./*.md src/app/ || true
@@ -72,11 +70,16 @@ jobs:
           date: "2025-08-27"
           ---
           # Test" > src/app/page.mdx
+      - name: Production environment variables
+        run: |
+          echo "NODE_ENV=production" > .env.production
+          echo "NEXT_PUBLIC_UI_URL=$NEXT_PUBLIC_UI_URL" >> .env.production
+          echo "NEXT_PUBLIC_HEADER_TITEL=$NEXT_PUBLIC_HEADER_TITEL" >> .env.production
+          echo "NEXT_PUBLIC_GIT_REPO_URL=$NEXT_PUBLIC_GIT_REPO_URL" >> .env.production
+          cat .env.production
       - name: Run build
-        working-directory: ./docs
         run: |
           npm run build
-          ls -la
         env:
           NODE_ENV: production
           NEXT_PUBLIC_UI_URL: ${{ env.NEXT_PUBLIC_UI_URL }}
