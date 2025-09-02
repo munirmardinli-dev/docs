@@ -1,19 +1,12 @@
 ---
 services:
   docs-development:
-    build:
-      context: .
-      dockerfile: ./.github/docker/Dockerfile.Dev
+    image: ghcr.io/munirmardinli-dev/docs/docs:latest
     container_name: docs-development
     hostname: docs-development
     ports:
       - 80:80
     restart: always
-    environment:
-      NODE_ENV: development
-      NEXT_PUBLIC_UI_URL: http://localhost:3000
-      NEXT_PUBLIC_HEADER_TITEL: docs
-      NEXT_PUBLIC_GIT_REPO_URL: https://github.com/munirmardinli-dev/docs
     networks:
       dockerization:
 

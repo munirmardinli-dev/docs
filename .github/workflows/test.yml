@@ -80,9 +80,7 @@ jobs:
 
       - name: Run build
         run: |
-          ls -la
           npm run build
-          ls -la
         working-directory: docs-app
         env:
           NODE_ENV: production
@@ -100,8 +98,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: List directory contents
-        run: ls -la
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
