@@ -10,12 +10,8 @@ on:
 
 permissions:
   contents: write
-  packages: write
-  issues: write
-  pull-requests: write
   pages: write
   id-token: write
-  actions: write
 
 env:
   NPM_VERSION: '22'
@@ -26,7 +22,7 @@ env:
   NEXT_PUBLIC_GIT_REPO_URL: https://github.com/munirmardinli/docs
 
 jobs:
-  prepare:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout current repository
@@ -41,10 +37,6 @@ jobs:
         run: |
           git clone https://github.com/munirmardinli-dev/docs.git docs-app
           ls -la docs-app/
-      
-      - name: Change to docs-app directory
-        run: cd docs-app
-        working-directory: docs-app
       
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -81,11 +73,9 @@ jobs:
 
       - name: Copy MDX files from docs folder to Next.js app
         run: |
-          # Kopiere alle MDX Dateien aus dem docs Ordner
-          cp -r ../docs/*.mdx src/app/ || true
-          ls -la src/app/
-        working-directory: docs-app
-
+          cp -r docs/* docs-app/src/app/ || true
+          ls -la docs-app/src/app/
+      
       - name: Run build
         run: npm run build
         working-directory: docs-app
@@ -94,3 +84,19 @@ jobs:
           NEXT_PUBLIC_UI_URL: ${{ env.NEXT_PUBLIC_UI_URL }}
           NEXT_PUBLIC_HEADER_TITEL: ${{ env.NEXT_PUBLIC_HEADER_TITEL }}
           NEXT_PUBLIC_GIT_REPO_URL: ${{ env.NEXT_PUBLIC_GIT_REPO_URL }}
+      
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './docs-app/out'
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
