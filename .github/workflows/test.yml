@@ -17,12 +17,13 @@ permissions:
 
 env:
   NPM_VERSION: '22'
-  REGISTRY_URL: 'ghcr.io'
+  DOCKER_REGISTRY: 'ghcr.io'
   REPO_NAME: ${{ github.event.repository.name }}
   NEXT_PUBLIC_UI_URL: http://localhost:3000
   NEXT_PUBLIC_HEADER_TITEL: Docs Management
   NEXT_PUBLIC_GIT_REPO_URL: https://github.com/munirmardinli/docs
-  IMAGE_NAME: ${{ github.repository }}/docs
+  DOCKER_IMAGE_NAME: ${{ github.repository }}/docs
+  IMAGE_TAG: latest
 
 jobs:
   build:
@@ -95,19 +96,19 @@ jobs:
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
         with:
-          registry: ${{ env.REGISTRY_URL }}
+          registry: ${{ env.DOCKER_REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: List directory contents
+        run: ls -la
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: ./docs-app
-          file: ./.github/docker/Dockerfile
+          context: .
+          file: ./docs-app/.github/docker/Dockerfile
           push: true
-          tags: |
-            ${{ env.REGISTRY_URL }}/${{ env.IMAGE_NAME }}:latest
-            ${{ env.REGISTRY_URL }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          tags: ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE_NAME }}:${{ env.IMAGE_TAG }}
           labels: |
             org.opencontainers.image.source=${{ github.event.repository.html_url }}
             org.opencontainers.image.revision=${{ github.sha }}
