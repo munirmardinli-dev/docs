@@ -75,9 +75,26 @@ jobs:
         run: |
           cp -r docs/* docs-app/src/app/ || true
           ls -la docs-app/src/app/
-      
+    
+      - name: Delete .env.local
+        working-directory: docs-app
+        run: |
+          ls -la
+          rm .env.local
+          ls -la
+
+      - name: Copy next.config.ts from current repository
+        working-directory: docs-app
+        run: |
+          cp next.config.ts next.config.ts
+          echo "✅ next.config.ts erfolgreich kopiert"
+          ls -la | grep next.config.ts
+
       - name: Run build
-        run: npm run build
+        run: |
+          ls -la
+          npm run build
+          ls -la
         working-directory: docs-app
         env:
           NODE_ENV: production
