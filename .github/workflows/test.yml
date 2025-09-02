@@ -12,6 +12,8 @@ permissions:
   contents: write
   pages: write
   id-token: write
+  packages: write
+  actions: write
 
 env:
   NPM_VERSION: '22'
@@ -20,7 +22,7 @@ env:
   NEXT_PUBLIC_UI_URL: http://localhost:3000
   NEXT_PUBLIC_HEADER_TITEL: Docs Management
   NEXT_PUBLIC_GIT_REPO_URL: https://github.com/munirmardinli/docs
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: ${{ github.repository }}/docs
 
 jobs:
   build:
@@ -100,7 +102,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./docs-app
           file: ./.github/docker/Dockerfile
           push: true
           tags: |
