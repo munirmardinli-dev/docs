@@ -86,9 +86,11 @@ jobs:
       - name: Copy next.config.ts from current repository
         working-directory: docs-app
         run: |
+          ls -la
           cp next.config.ts next.config.ts
           echo "✅ next.config.ts erfolgreich kopiert"
           ls -la | grep next.config.ts
+          ls -la
 
       - name: Run build
         run: |
