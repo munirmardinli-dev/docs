@@ -8,16 +8,41 @@ import { Stack } from '@mui/material';
 import { type CalendarEvent, type RBCCalendarProps } from '@/types/calendar';
 import CalendarStyleManager from '@/styles/calendar';
 
+/**
+ * Eine erweiterte Kalender-Komponente basierend auf react-big-calendar
+ *
+ * @example
+ * ```tsx
+ * <MyCalendar
+ *   props={{
+ *     locale: 'de',
+ *     events: [
+ *       { start: new Date(), end: new Date(), title: 'Meeting' }
+ *     ]
+ *   }}
+ * />
+ * ```
+ */
 export default class MyCalendar extends React.Component<RBCCalendarProps> {
 	constructor(props: RBCCalendarProps) {
 		super(props);
 	}
 
+	/**
+	 * Extrahiert das Startdatum aus einem Kalender-Event
+	 * @param event - Das Event-Objekt von react-big-calendar
+	 * @returns Das Startdatum als Date-Objekt
+	 */
 	startAccessor = (event: Event) => {
 		const calendarEvent = event as CalendarEvent;
 		return calendarEvent.start ? new Date(calendarEvent.start) : new Date();
 	};
 
+	/**
+	 * Extrahiert das Enddatum aus einem Kalender-Event
+	 * @param event - Das Event-Objekt von react-big-calendar
+	 * @returns Das Enddatum als Date-Objekt
+	 */
 	endAccessor = (event: Event) => {
 		const calendarEvent = event as CalendarEvent;
 		return calendarEvent.end ? new Date(calendarEvent.end) : new Date();

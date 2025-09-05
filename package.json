@@ -4,7 +4,7 @@
   "private": true,
   "version": "0.0.6",
   "license": "MIT",
-  "homepage": "https://munirmardinli-dev.github.io/docs",
+  "homepage": "https://github.com/munirmardinli-dev/docs",
   "sponsor": {
     "url": "https://linktr.ee/munirmardinli",
     "type": "individual",
@@ -27,6 +27,11 @@
     "type": "git",
     "url": "git+https://github.com/munirmardinli-dev/docs.git",
     "directory": "Munir Mardinli"
+  },
+  "preview": {
+    "uiUrl": "https://docs.munirmardinli.de",
+    "headerTitel": "Docs",
+    "repoUrl": "https://github.com/munirmardinli-dev/docs"
   },
   "author": {
     "name": "Munir Mardinli",

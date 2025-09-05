@@ -18,6 +18,7 @@ import { Suspense } from 'react';
 import { Head } from 'nextra/components/head';
 import { Search } from 'nextra/components/search';
 import { CacheProvider } from '@emotion/react';
+import packageJson from 'package.json';
 
 DayjsManager.initialize();
 
@@ -72,16 +73,16 @@ export default async function RootLayout({
 										navbar={
 											<Navbar
 												logoLink="/docs"
-												projectLink={env.NEXT_PUBLIC_UI_URL}
+												projectLink={packageJson.preview.repoUrl}
 												logo={
 													<span style={{ marginLeft: '.4em', fontWeight: 800 }}>
-														{env.NEXT_PUBLIC_HEADER_TITEL}
+														{packageJson.preview.headerTitel}
 													</span>
 												}
 												align="left"
 											/>
 										}
-										docsRepositoryBase={`${env.NEXT_PUBLIC_GIT_REPO_URL}/docs`}
+										docsRepositoryBase={packageJson.preview.repoUrl}
 										pageMap={sidebarData}
 										feedback={{ content: null }}
 										search={<Search placeholder="Suche..." />}
