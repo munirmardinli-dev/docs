@@ -119,5 +119,8 @@
 	"[dockerfile]": {
 		"editor.defaultFormatter": "ms-azuretools.vscode-containers"
 	},
-	"tailwindCSS.experimental.classRegex": [["className\\s*:\\s*['\"]([^'\"]*)['\"]"]]
+	"tailwindCSS.experimental.classRegex": [
+		["className\\s*:\\s*['\"]([^'\"]*)['\"]"]
+	],
+	"codeQL.githubDatabase.update": "never"
 }

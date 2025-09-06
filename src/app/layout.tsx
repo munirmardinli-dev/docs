@@ -72,7 +72,7 @@ export default async function RootLayout({
 										sidebar={{ autoCollapse: true }}
 										navbar={
 											<Navbar
-												logoLink="/docs"
+												logoLink="/"
 												projectLink={packageJson.preview.repoUrl}
 												logo={
 													<span style={{ marginLeft: '.4em', fontWeight: 800 }}>

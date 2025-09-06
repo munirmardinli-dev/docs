@@ -14,10 +14,11 @@ FROM nginx:${NGINX_VERSION}
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV HOSTNAME="0.0.0.0"
+ENV UID=1026
+ENV GID=100
 ENV NEXT_PUBLIC_UI_URL=https://docs.homelab-prod.synology.me
+ENV ACCESS_LOG=/var/log/nginx/access.log
+ENV ERROR_LOG=/var/log/nginx/error.log
 ENV VERSION=${VERSION}
 
 COPY docs-app/out /usr/share/nginx/html
-
-LABEL maintainer="Munir Mardinli <munir@mardinli.de>" \
-      version="${VERSION}"
