@@ -12,9 +12,9 @@ export interface RBCCalendarProps {
 		key: string;
 		dayLayoutAlgorithm: DayLayoutAlgorithm;
 		messages: object;
-		title: string;
-		end: Date;
-		start: Date;
+		title?: string;
+		end?: Date;
+		start?: Date;
 		events: CalendarEvent[];
 	};
 }
