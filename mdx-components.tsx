@@ -12,9 +12,15 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 			<Image
 				{...props}
 				priority
+				src={props.src}
 				alt={props.alt}
-				width={props.width}
-				height={props.height}
+				sizes='100vw'
+				style={{
+					objectFit: 'cover',
+				}}
+				loading="lazy"
+				placeholder="blur"
+				fill
 			/>
 		),
 	};
