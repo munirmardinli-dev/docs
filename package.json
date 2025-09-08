@@ -2,7 +2,7 @@
   "name": "@munirmardinli-dev/docs",
   "description": "Documentation tools and utilities for Munir Mardinli's projects",
   "private": true,
-  "version": "0.0.6",
+  "version": "0.0.7",
   "license": "MIT",
   "homepage": "https://github.com/munirmardinli-dev/docs",
   "sponsor": {

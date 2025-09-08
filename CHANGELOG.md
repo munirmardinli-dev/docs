@@ -1,5 +1,11 @@
 # @munirmardinli-dev/docs
 
+## 0.0.7
+
+### Patch Changes
+
+- d0892a8: add quote components
+
 ## 0.0.6
 
 ### Patch Changes
