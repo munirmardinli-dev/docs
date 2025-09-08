@@ -1,5 +1,11 @@
 # @munirmardinli-dev/docs
 
+## 0.0.8
+
+### Patch Changes
+
+- 3fed5e5: add poltyGraph
+
 ## 0.0.7
 
 ### Patch Changes
