@@ -1,6 +1,7 @@
 import { useMDXComponents as getThemeComponents } from 'nextra-theme-docs';
 import type { MDXComponents } from 'mdx/types';
 import Image, { ImageProps } from 'next/image';
+import Quote from '@/components/quote';
 
 const themeComponents = getThemeComponents();
 
@@ -14,7 +15,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 				priority
 				src={props.src}
 				alt={props.alt}
-				sizes='100vw'
+				sizes="100vw"
 				style={{
 					objectFit: 'cover',
 				}}
@@ -23,5 +24,6 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 				fill
 			/>
 		),
+		Quote,
 	};
 }

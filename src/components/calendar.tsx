@@ -5,7 +5,6 @@ import { dayjsLocalizer, Views, Event } from 'react-big-calendar';
 import React from 'react';
 import DayjsManager from '@/lib/dayjs';
 import { Stack } from '@mui/material';
-import { type CalendarEvent, type RBCCalendarProps } from '@/types/calendar';
 import CalendarStyleManager from '@/styles/calendar';
 
 /**
