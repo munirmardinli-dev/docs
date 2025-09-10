@@ -69,7 +69,6 @@ export default function PlotlyGraph({
     if (window.Plotly) {
       initializePlotly();
     } else {
-      // Plotly Script laden falls nicht vorhanden
       const script = document.createElement('script');
       script.src = 'https://cdn.plot.ly/plotly-latest.min.js';
       script.onload = initializePlotly;
