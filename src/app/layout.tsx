@@ -4,21 +4,18 @@ import 'katex/dist/katex.min.css';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { Layout, Navbar } from 'nextra-theme-docs';
 import { getPageMap } from 'nextra/page-map';
+import { Head } from 'nextra/components/head';
+import { Search } from 'nextra/components/search';
+import { ThemeProvider } from '@mui/material/styles';
 import { GoogleTagManager, GoogleTagManagerNoScript } from '@/lib/googleTag';
 import DayjsManager from '@/lib/dayjs';
 import ClientLocalizationProvider from '@/lib/clientLocalizationProvider';
-import { StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
 import EnvManager from '@/lib/env';
 import theme from '@/utils/theme';
 import FontManager from '@/lib/font';
 import '@/app/_metadata';
-import CacheManager from '@/utils/cache';
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
-import { Suspense } from 'react';
-import { Head } from 'nextra/components/head';
-import { Search } from 'nextra/components/search';
-import { CacheProvider } from '@emotion/react';
 import packageJson from 'package.json';
+import { CssBaseline } from '@mui/material';
 
 DayjsManager.initialize();
 
@@ -53,21 +50,11 @@ export default async function RootLayout({
 			</Head>
 			<body className="antialiased tracking-tight">
 				<GoogleTagManagerNoScript />
-				<AppRouterCacheProvider options={{ enableCssLayer: true }}>
-					<StyledEngineProvider enableCssLayer>
-						<CacheProvider
-							value={
-								theme().direction === 'rtl'
-									? CacheManager.cacheRtl
-									: CacheManager.cacheLtr
-							}
-						>
 							<ThemeProvider
 								theme={theme()}
 								defaultMode="system"
-								colorSchemeStorageKey="theme"
 							>
-								<Suspense fallback={<div>Loading...</div>} name="layout">
+								<CssBaseline />
 									<Layout
 										sidebar={{ autoCollapse: true }}
 										navbar={
@@ -92,11 +79,7 @@ export default async function RootLayout({
 											{children}
 										</ClientLocalizationProvider>
 									</Layout>
-								</Suspense>
 							</ThemeProvider>
-						</CacheProvider>
-					</StyledEngineProvider>
-				</AppRouterCacheProvider>
 			</body>
 		</html>
 	);

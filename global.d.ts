@@ -1,29 +1,64 @@
 import { DayLayoutAlgorithm, Event } from 'react-big-calendar';
 
 declare global {
+	// ===== BASIS-TYPEN =====
+	type JsonData = Record<string, unknown>;
+	type CalendarType = 'work' | 'hobbies' | 'calendar';
+
+	// ===== KALENDER-TYPEN =====
+	interface CalendarEvent extends Event {
+		title: string;
+		start: Date;
+		end: Date;
+		label?: string;
+		description?: string;
+	}
+
+	interface CalendarData extends JsonData {
+		events: CalendarEvent[];
+	}
+
+	// ===== STORE-TYPEN =====
+	interface FileStore {
+		get: <T extends JsonData = JsonData>(filename: string) => Promise<T>;
+	}
+
+	// ===== KALENDER-PROPS =====
+	interface BaseCalendarProps {
+		locale: string;
+		key: string;
+		dayLayoutAlgorithm: DayLayoutAlgorithm;
+		messages: object;
+		title?: string;
+		end?: Date;
+		start?: Date;
+		events: CalendarEvent[];
+	}
+
+	// Legacy Interface für Rückwärtskompatibilität
+	interface RBCCalendarProps {
+		props: BaseCalendarProps;
+	}
+
+	// Haupt-Interface für MyCalendar - unterstützt beide Modi
+	interface MyCalendarProps {
+		// Store-Modus: filename für automatisches Laden
+		filename?: string;
+		// Standard-Modus: direkte Props
+		props?: BaseCalendarProps;
+		// Zusätzliche Props für Store-Modus
+		locale?: string;
+		key?: string;
+		dayLayoutAlgorithm?: DayLayoutAlgorithm;
+	}
+
+	// ===== ANDERE KOMPONENTEN =====
 	interface QuoteProps {
 		children: React.ReactNode;
 		author?: string;
 		source?: string;
 		sourceUrl?: string;
 		variant?: 'default' | 'highlighted' | 'minimal';
-	}
-	interface CalendarEvent extends Event {
-		title: string;
-		start: Date;
-		end: Date;
-	}
-	interface RBCCalendarProps {
-		props: {
-			locale: string;
-			key: string;
-			dayLayoutAlgorithm: DayLayoutAlgorithm;
-			messages: object;
-			title?: string;
-			end?: Date;
-			start?: Date;
-			events: CalendarEvent[];
-		};
 	}
 	interface PlotSegment {
 		x: number[];
@@ -68,7 +103,11 @@ declare global {
 
 	// Plotly Typen definieren
 	interface Plotly {
-    react(arg0: string, data: PlotlyData[], layout: Partial<PlotlyLayout>): unknown;
+		react(
+			arg0: string,
+			data: PlotlyData[],
+			layout: Partial<PlotlyLayout>
+		): unknown;
 		newPlot: (divId: string, data: PlotlyData[], layout: PlotlyLayout) => void;
 	}
 
