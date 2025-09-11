@@ -36,6 +36,8 @@
 		"**/*.tsx",
 		".next/types/**/*.ts",
 		"**/*.d.ts",
+		"global.d.ts",
+		"dotenv.d.ts",
 		"next.config.ts",
 		"mdx-components.tsx"
 	],

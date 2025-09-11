@@ -7,12 +7,11 @@ import { getPageMap } from 'nextra/page-map';
 import { Head } from 'nextra/components/head';
 import { Search } from 'nextra/components/search';
 import { ThemeProvider } from '@mui/material/styles';
-import { GoogleTagManager, GoogleTagManagerNoScript } from '@/lib/googleTag';
-import DayjsManager from '@/lib/dayjs';
-import ClientLocalizationProvider from '@/lib/clientLocalizationProvider';
-import EnvManager from '@/lib/env';
+import { GoogleTagManager, GoogleTagManagerNoScript } from '@/utils/googleTag';
+import DayjsManager from '@/utils/dayjs';
+import ClientLocalizationProvider from '@/utils/clientLocalizationProvider';
 import theme from '@/utils/theme';
-import FontManager from '@/lib/font';
+import FontManager from '@/utils/font';
 import '@/app/_metadata';
 import packageJson from 'package.json';
 import { CssBaseline } from '@mui/material';
@@ -24,7 +23,6 @@ export default async function RootLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-	const env = EnvManager.getEnv<string>();
 	const sidebarData = await getPageMap();
 	return (
 		<html
@@ -38,11 +36,11 @@ export default async function RootLayout({
 				<link
 					rel="sitemap"
 					type="application/xml"
-					href={`${env.NEXT_PUBLIC_UI_URL}/sitemap.xml`}
+					href={`${process.env.NEXT_PUBLIC_UI_URL}/sitemap.xml`}
 				/>
 				<link
 					rel="manifest"
-					href={`${env.NEXT_PUBLIC_UI_URL}/manifest.webmanifest`}
+					href={`${process.env.NEXT_PUBLIC_UI_URL}/manifest.webmanifest`}
 				/>
 				<meta name="robots" content="index, follow" />
 				<meta name="theme-color" content="#000000" />
@@ -50,36 +48,31 @@ export default async function RootLayout({
 			</Head>
 			<body className="antialiased tracking-tight">
 				<GoogleTagManagerNoScript />
-							<ThemeProvider
-								theme={theme()}
-								defaultMode="system"
-							>
-								<CssBaseline />
-									<Layout
-										sidebar={{ autoCollapse: true }}
-										navbar={
-											<Navbar
-												logoLink="/"
-												projectLink={packageJson.preview.repoUrl}
-												logo={
-													<span style={{ marginLeft: '.4em', fontWeight: 800 }}>
-														{packageJson.preview.headerTitel}
-													</span>
-												}
-												align="left"
-											/>
-										}
-										docsRepositoryBase={packageJson.preview.repoUrl}
-										pageMap={sidebarData}
-										feedback={{ content: null }}
-										search={<Search placeholder="Suche..." />}
-										editLink={false}
-									>
-										<ClientLocalizationProvider>
-											{children}
-										</ClientLocalizationProvider>
-									</Layout>
-							</ThemeProvider>
+				<ThemeProvider theme={theme()} defaultMode="system">
+					<CssBaseline />
+					<Layout
+						sidebar={{ autoCollapse: true }}
+						navbar={
+							<Navbar
+								logoLink="/"
+								projectLink={packageJson.preview.repoUrl}
+								logo={
+									<span style={{ marginLeft: '.4em', fontWeight: 800 }}>
+										{packageJson.preview.headerTitel}
+									</span>
+								}
+								align="left"
+							/>
+						}
+						docsRepositoryBase={packageJson.preview.repoUrl}
+						pageMap={sidebarData}
+						feedback={{ content: null }}
+						search={<Search placeholder="Suche..." />}
+						editLink={false}
+					>
+						<ClientLocalizationProvider>{children}</ClientLocalizationProvider>
+					</Layout>
+				</ThemeProvider>
 			</body>
 		</html>
 	);

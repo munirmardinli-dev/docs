@@ -20,7 +20,7 @@ class FileStoreClass implements FileStore {
 		try {
 			const cleanFilename = filename.replace(/^\/+/, '').replace(/\.\./g, '');
 
-			const response = await fetch(`/data/${cleanFilename}`);
+			const response: Response = await fetch(`/data/${cleanFilename}`);
 
 			if (!response.ok) {
 				throw new Error(
@@ -54,16 +54,3 @@ class FileStoreClass implements FileStore {
 const fileStore = new FileStoreClass();
 
 export const get = fileStore.get.bind(fileStore);
-
-export const getCalendar = (
-	calendarType: CalendarType
-): Promise<CalendarData> => {
-	const filename: string = `${calendarType}Calendar.json`;
-	return get<CalendarData>(filename);
-};
-
-export const getWorkCalendar = (): Promise<CalendarData> => getCalendar('work');
-export const getHobbiesCalendar = (): Promise<CalendarData> =>
-	getCalendar('hobbies');
-export const getCalendarData = (): Promise<CalendarData> =>
-	getCalendar('calendar');

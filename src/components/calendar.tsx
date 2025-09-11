@@ -1,17 +1,12 @@
 'use client';
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import {
-	dayjsLocalizer,
-	Views,
-	Event,
-} from 'react-big-calendar';
+import { dayjsLocalizer, Views, Event, Messages } from 'react-big-calendar';
 import React from 'react';
-import DayjsManager from '@/lib/dayjs';
+import DayjsManager from '@/utils/dayjs';
 import { Stack } from '@mui/material';
 import CalendarStyleManager from '@/styles/calendar';
-import { get } from '@/stores/get';
-import CalendarMessages from '@/public/data/calendar.json';
+import { get } from '@/utils/get';
 
 /**
  * Eine erweiterte Kalender-Komponente basierend auf react-big-calendar
@@ -36,6 +31,7 @@ import CalendarMessages from '@/public/data/calendar.json';
 export default class MyCalendar extends React.Component<MyCalendarProps> {
 	state = {
 		calendarData: null as CalendarData | null,
+		messages: null as Messages | null,
 	};
 
 	constructor(props: MyCalendarProps) {
@@ -43,6 +39,7 @@ export default class MyCalendar extends React.Component<MyCalendarProps> {
 	}
 
 	componentDidMount() {
+		this.loadMessages();
 		if (this.props.filename) {
 			this.loadData();
 		}
@@ -59,7 +56,7 @@ export default class MyCalendar extends React.Component<MyCalendarProps> {
 
 		try {
 			const data = await get<CalendarData>(this.props.filename);
-			this.setState({ calendarData: data, error: null });
+			this.setState({ calendarData: data });
 		} catch (err) {
 			this.setState({
 				error: err instanceof Error ? err.message : 'Unbekannter Fehler',
@@ -86,6 +83,19 @@ export default class MyCalendar extends React.Component<MyCalendarProps> {
 	endAccessor = (event: Event) => {
 		const calendarEvent = event as CalendarEvent;
 		return calendarEvent.end ? new Date(calendarEvent.end) : new Date();
+	};
+
+	loadMessages = async () => {
+		try {
+			const data = await get('calendar.json');
+			this.setState({ messages: data.messages });
+		} catch (err) {
+			console.error('Fehler beim Laden der Messages:', err);
+		}
+	};
+
+	messages = () => {
+		return this.state.messages;
 	};
 
 	render() {
@@ -168,7 +178,7 @@ export default class MyCalendar extends React.Component<MyCalendarProps> {
 				<CalendarStyleManager.StyledCalendar
 					localizer={dayjsLocalizer(DayjsManager.instance)}
 					events={events}
-					messages={CalendarMessages.messages}
+					messages={this.messages() || {}}
 					startAccessor={this.startAccessor}
 					endAccessor={this.endAccessor}
 					style={{
@@ -178,7 +188,7 @@ export default class MyCalendar extends React.Component<MyCalendarProps> {
 					}}
 					defaultDate={DayjsManager.instance(new Date()).toDate()}
 					dayLayoutAlgorithm={dayLayoutAlgorithm}
-					key={key + "Calendar"}
+					key={key + 'Calendar'}
 					culture={DayjsManager.instance.locale(locale)}
 					min={DayjsManager.instance().hour(8).minute(0).toDate()}
 					max={DayjsManager.instance().hour(23).minute(0).toDate()}

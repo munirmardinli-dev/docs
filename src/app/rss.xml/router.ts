@@ -2,7 +2,6 @@ import fs from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
 import PackageJson from 'package.json';
-import EnvManager from '@/lib/env';
 
 export const dynamic = 'force-static';
 
@@ -45,9 +44,8 @@ class RSSRouterManager {
 	}
 
 	static generateRSS(): void {
-		const baseUrl = EnvManager.getEnv<string>().NEXT_PUBLIC_UI_URL;
 
-		if (!baseUrl) {
+		if (!process.env.NEXT_PUBLIC_UI_URL) {
 			console.error('NEXT_PUBLIC_UI_URL environment variable is not set');
 			return;
 		}
@@ -84,7 +82,7 @@ class RSSRouterManager {
 					frontmatter.description || '',
 					frontmatter.author || 'Unknown',
 					new Date(frontmatter.date),
-					`${baseUrl}${url}`
+					`${process.env.NEXT_PUBLIC_UI_URL}${url}`
 				);
 			})
 			.filter(
@@ -98,8 +96,8 @@ class RSSRouterManager {
   <channel>
     <title>${PackageJson.name}</title>
     <description>${PackageJson.description}</description>
-    <link>${baseUrl}</link>
-    <atom:link href="${baseUrl}/rss.xml" rel="self" type="application/rss+xml" />
+    <link>${process.env.NEXT_PUBLIC_UI_URL}</link>
+    <atom:link href="${process.env.NEXT_PUBLIC_UI_URL}/rss.xml" rel="self" type="application/rss+xml" />
     <language>de-DE</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
     ${rssItems

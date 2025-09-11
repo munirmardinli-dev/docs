@@ -1,12 +1,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import EnvManager from '@/lib/env';
 import type { MetadataRoute } from 'next/types';
 
 export const dynamic = 'force-static';
 
 class SitemapManager {
-	static env = EnvManager.getEnv<string>();
 
 	static getAllFiles(dir: string, fileList: string[] = []): string[] {
 		const files = fs.readdirSync(dir);
@@ -65,7 +63,7 @@ class SitemapManager {
 		const routes = SitemapManager.extractRoutesFromPages();
 
 		const sitemapEntries: MetadataRoute.Sitemap = routes.map((route) => ({
-			url: `${SitemapManager.env.NEXT_PUBLIC_UI_URL}${route}`,
+			url: `${process.env.NEXT_PUBLIC_UI_URL}${route}`,
 			lastModified: new Date(),
 			changeFrequency: 'weekly',
 			priority: route === '/' ? 1 : 0.8,
