@@ -6,6 +6,7 @@ import PlotlyGraph from '@/components/plotlyGraph';
 import MyCalendar from '@/components/calendar';
 import Table from '@/components/table';
 import { Callout } from 'nextra/components'
+import Todo from '@/components/todo';
 
 const themeComponents = getThemeComponents();
 
@@ -33,5 +34,6 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 		MyCalendar,
 		Table,
 		Callout,
+		Todo
 	};
 }

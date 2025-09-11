@@ -52,6 +52,34 @@ declare global {
 		dayLayoutAlgorithm?: DayLayoutAlgorithm;
 	}
 
+	// ===== TODO-TYPEN =====
+	interface TodoItem {
+		id: number;
+		title: string;
+		description?: string;
+		done: boolean;
+		createdAt: string;
+		dueDate?: string;
+		priority?: 'low' | 'medium' | 'high';
+	}
+
+	interface TodoState {
+		todos: TodoItem[];
+		loading: boolean;
+		error: string | null;
+		dateFilter: 'all' | 'today' | 'week' | 'overdue';
+		currentPage: number;
+		pageSize: number;
+	}
+	
+	interface TodoData extends JsonData {
+		todos: TodoItem[];
+	}
+
+	interface TodoProps {
+		filename?: string;
+	}
+
 	// ===== ANDERE KOMPONENTEN =====
 	interface QuoteProps {
 		children: React.ReactNode;

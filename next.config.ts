@@ -28,7 +28,7 @@ export default withNextra({
 	},
 	images: {
 		unoptimized: true,
-		domains: [process.env.NEXT_PUBLIC_UI_URL, process.env.NEXT_PUBLIC_HOMELAB_URL],
+		domains: [process.env.NEXT_PUBLIC_UI_URL, process.env.NEXT_PUBLIC_HOMELAB_URL || 'http://localhost:3000'],
 	},
 	/*   async redirects() {
       return [
