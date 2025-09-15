@@ -79,7 +79,7 @@
     "react-dom": "19.1.1"
   },
   "devDependencies": {
-    "@changesets/cli": "2.29.6",
+    "@changesets/cli": "2.29.7",
     "@graphql-eslint/eslint-plugin": "4.4.0",
     "@types/node": "24.3.1",
     "@types/react": "19.1.12",
