@@ -122,5 +122,8 @@
 	"tailwindCSS.experimental.classRegex": [
 		["className\\s*:\\s*['\"]([^'\"]*)['\"]"]
 	],
-	"codeQL.githubDatabase.update": "never"
+	"codeQL.githubDatabase.update": "never",
+	"[typescript]": {
+		"editor.defaultFormatter": "vscode.typescript-language-features"
+	}
 }

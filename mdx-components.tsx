@@ -7,6 +7,7 @@ import MyCalendar from '@/components/calendar';
 import Table from '@/components/table';
 import { Callout } from 'nextra/components'
 import Todo from '@/components/todo';
+import Pdf from '@/components/pdf';
 
 const themeComponents = getThemeComponents();
 
@@ -34,6 +35,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 		MyCalendar,
 		Table,
 		Callout,
-		Todo
+		Todo,
+		Pdf
 	};
 }

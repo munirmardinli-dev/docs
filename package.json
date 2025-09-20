@@ -71,6 +71,7 @@
     "dayjs": "1.11.18",
     "dotenv": "^17.2.1",
     "katex": "0.16.22",
+    "@react-pdf/renderer": "^4.2.2",
     "next": "15.5.3",
     "nextra": "4.4.0",
     "nextra-theme-docs": "4.3.0",
