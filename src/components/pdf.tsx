@@ -3,7 +3,6 @@ import { ReactElement } from 'react';
 import { Cv } from '@/components/cv/cv';
 import ApplicationLetterOverview from '@/components/cv/write';
 import CoverSheetOverwie from '@/components/cv/coverSheet';
-import { Document } from '@react-pdf/renderer';
 import Certification from '@/components/cv/certification';
 
 import dynamic from 'next/dynamic';
@@ -12,12 +11,19 @@ const PDFViewer = dynamic(
 	() => import('@react-pdf/renderer').then((mod) => mod.PDFViewer),
 	{
 		ssr: false,
-		loading: () => <p>Loading...</p>,
+		loading: () => <p>Lade PDF-Viewer...</p>,
+	}
+);
+
+const Document = dynamic(
+	() => import('@react-pdf/renderer').then((mod) => mod.Document),
+	{
+		ssr: false,
 	}
 );
 
 export default function Pdf({ filename }: { filename: string }): ReactElement {
-
+	
 	return (
 		<>
 			<div style={{ width: '100%', height: '100vh' }}>
