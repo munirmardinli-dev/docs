@@ -38,22 +38,6 @@ const nextConfig: NextConfig = {
 		},
 		resolveExtensions: ['.mdx', '.tsx', '.ts', '.jsx', '.js', '.json'],
 	},
-	transpilePackages: ['@react-pdf/renderer'],
-	experimental: {
-		esmExternals: 'loose'
-	},
-	webpack: (config, { isServer }: { isServer: boolean }) => {
-		if (!isServer) {
-			config.externals = [
-				...(config.externals || []),
-				'canvas',
-				'fontkit',
-				'linebreak',
-				'png-js'
-			];
-		}
-		return config;
-	}
 };
 
 export default withNextra(nextConfig);
