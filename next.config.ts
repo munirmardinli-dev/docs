@@ -1,4 +1,5 @@
 import nextra from 'nextra';
+import type { NextConfig } from 'next';
 
 const withNextra = nextra({
 	defaultShowCopyCode: true,
@@ -17,7 +18,7 @@ const withNextra = nextra({
 	whiteListTagsStyling: ['table', 'thead', 'tbody', 'tr', 'th', 'td'],
 });
 
-export default withNextra({
+const nextConfig: NextConfig = {
 	output: 'export',
 	reactStrictMode: true,
 	trailingSlash: true,
@@ -30,15 +31,6 @@ export default withNextra({
 		unoptimized: true,
 		domains: [process.env.NEXT_PUBLIC_UI_URL, process.env.NEXT_PUBLIC_HOMELAB_URL || 'http://localhost:3000'],
 	},
-	/*   async redirects() {
-      return [
-        {
-          source: "/",
-          destination: "/docs",
-          permanent: true,
-        }
-      ];
-    }, */
 	turbopack: {
 		resolveAlias: {
 			'next-mdx-import-source-file': './mdx-components.tsx',
@@ -46,4 +38,22 @@ export default withNextra({
 		},
 		resolveExtensions: ['.mdx', '.tsx', '.ts', '.jsx', '.js', '.json'],
 	},
-});
+	transpilePackages: ['@react-pdf/renderer'],
+	experimental: {
+		esmExternals: 'loose'
+	},
+	webpack: (config, { isServer }: { isServer: boolean }) => {
+		if (!isServer) {
+			config.externals = [
+				...(config.externals || []),
+				'canvas',
+				'fontkit',
+				'linebreak',
+				'png-js'
+			];
+		}
+		return config;
+	}
+};
+
+export default withNextra(nextConfig);
