@@ -4,23 +4,7 @@ import { Cv } from '@/components/cv/cv';
 import ApplicationLetterOverview from '@/components/cv/write';
 import CoverSheetOverwie from '@/components/cv/coverSheet';
 import Certification from '@/components/cv/certification';
-
-import dynamic from 'next/dynamic';
-
-const PDFViewer = dynamic(
-	() => import('@react-pdf/renderer').then((mod) => mod.PDFViewer),
-	{
-		ssr: false,
-		loading: () => <p>Lade PDF-Viewer...</p>,
-	}
-);
-
-const Document = dynamic(
-	() => import('@react-pdf/renderer').then((mod) => mod.Document),
-	{
-		ssr: false,
-	}
-);
+import { PDFViewer, Document } from '@react-pdf/renderer';
 
 export default function Pdf({ filename }: { filename: string }): ReactElement {
 	
