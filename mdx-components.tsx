@@ -4,10 +4,9 @@ import Image, { ImageProps } from 'next/image';
 import Quote from '@/components/quote';
 import PlotlyGraph from '@/components/plotlyGraph';
 import MyCalendar from '@/components/calendar';
-import Table from '@/components/table';
 import { Callout } from 'nextra/components'
 import Todo from '@/components/todo';
-import Pdf from '@/components/pdf';
+import CVSettings from '@/components/cvSettings';
 
 const themeComponents = getThemeComponents();
 
@@ -33,9 +32,8 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 		Quote,
 		PlotlyGraph,
 		MyCalendar,
-		Table,
 		Callout,
 		Todo,
-		Pdf
+		CVSettings
 	};
 }
