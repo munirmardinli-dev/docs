@@ -25,10 +25,10 @@ import {
 	Box,
 } from '@mui/material';
 
-export default class Todo extends Component<TodoProps, TodoState> {
+export default class Todo extends Component<ComponentProps, TodoState> {
 	private dayjs;
 
-	constructor(props: TodoProps) {
+	constructor(props: ComponentProps) {
 		super(props);
 		this.state = {
 			todos: [],

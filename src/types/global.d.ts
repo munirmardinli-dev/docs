@@ -5,6 +5,9 @@ declare global {
 	type JsonData = Record<string, unknown>;
 	type CalendarType = 'work' | 'hobbies' | 'calendar';
 
+	interface ComponentProps {
+		filename: string;
+	}
 	// ===== KALENDER-TYPEN =====
 	interface CalendarEvent extends Event {
 		title: string;
@@ -41,9 +44,7 @@ declare global {
 	}
 
 	// Haupt-Interface für MyCalendar - unterstützt beide Modi
-	interface MyCalendarProps {
-		// Store-Modus: filename für automatisches Laden
-		filename?: string;
+	interface MyCalendarProps extends ComponentProps {
 		// Standard-Modus: direkte Props
 		props?: BaseCalendarProps;
 		// Zusätzliche Props für Store-Modus
@@ -76,8 +77,21 @@ declare global {
 		todos: TodoItem[];
 	}
 
-	interface TodoProps {
-		filename?: string;
+	// ===== APPLICATION JOB TYPES =====
+	interface ApplicationJob {
+		id: number;
+		title: string;
+		link?: string;
+		done: boolean;
+		description?: string;
+		label?: string;
+		requestDate: string;
+		responseDate?: string;
+		responseText?: string;
+	}
+
+	interface ApplicationJobData extends JsonData {
+		application: ApplicationJob[];
 	}
 
 	// ===== ANDERE KOMPONENTEN =====

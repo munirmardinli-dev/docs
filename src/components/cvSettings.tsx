@@ -6,7 +6,7 @@ import CoverSheetOverwie from '@/components/cv/coverSheet';
 import Certification from '@/components/cv/certification';
 import { PDFViewer, Document } from '@react-pdf/renderer';
 
-export default function CVSettings({ filename }: { filename: string }): ReactElement {
+export default function CVSettings({ filename }: ComponentProps): ReactElement {
 	const [isClient, setIsClient] = useState(false);
 
 	useEffect(() => {
