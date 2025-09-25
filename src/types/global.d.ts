@@ -1,9 +1,15 @@
 import { DayLayoutAlgorithm, Event } from 'react-big-calendar';
+import { ApplicationJobStatusEnum, ApplicationJobStatusEnumType } from '../constants/applicationJobStatus';
 
 declare global {
 	// ===== BASIS-TYPEN =====
 	type JsonData = Record<string, unknown>;
 	type CalendarType = 'work' | 'hobbies' | 'calendar';
+	type ApplicationJobStatus = 'pending' | 'responded' | 'rejected' | 'accepted';
+
+	interface ApplicationsJobProps extends ComponentProps {
+		statusFilter?: 'all' | ApplicationJobStatusEnumType;
+	}
 
 	interface ComponentProps {
 		filename: string;
@@ -45,9 +51,7 @@ declare global {
 
 	// Haupt-Interface für MyCalendar - unterstützt beide Modi
 	interface MyCalendarProps extends ComponentProps {
-		// Standard-Modus: direkte Props
 		props?: BaseCalendarProps;
-		// Zusätzliche Props für Store-Modus
 		locale?: string;
 		key?: string;
 		dayLayoutAlgorithm?: DayLayoutAlgorithm;
@@ -78,6 +82,29 @@ declare global {
 	}
 
 	// ===== APPLICATION JOB TYPES =====
+
+	interface ApplicationJobTexts extends JsonData {
+		close: string;
+		description: string;
+		status: string;
+		timestamp: string;
+		jobPosting: string;
+		employerResponse: string;
+		applied: string;
+		responseReceived: string;
+		noDescription: string;
+		noApplications: string;
+		applicationsFound: string;
+		loadingApplications: string;
+		error: string;
+		allApplications: string;
+		pending: string;
+		responded: string;
+		rejected: string;
+		accepted: string;
+		title: string;
+	}
+
 	interface ApplicationJob {
 		id: number;
 		title: string;
@@ -88,10 +115,24 @@ declare global {
 		requestDate: string;
 		responseDate?: string;
 		responseText?: string;
+		status: ApplicationJobStatus;
+	}
+
+	interface ApplicationJobState {
+		applicationJobs: ApplicationJob[];
+		loading: boolean;
+		error: string | null;
+		statusFilter: 'all' | ApplicationJobStatusEnumType;
+		currentPage: number;
+		pageSize: number;
+		selectedJob: ApplicationJob | null;
+		modalOpen: boolean;
+		texts: ApplicationJobTexts | null;
 	}
 
 	interface ApplicationJobData extends JsonData {
 		application: ApplicationJob[];
+		texts: ApplicationJobTexts;
 	}
 
 	// ===== ANDERE KOMPONENTEN =====
