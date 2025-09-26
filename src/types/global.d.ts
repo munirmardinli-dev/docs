@@ -7,6 +7,18 @@ declare global {
 	type CalendarType = 'work' | 'hobbies' | 'calendar';
 	type ApplicationJobStatus = 'pending' | 'responded' | 'rejected' | 'accepted';
 
+	interface FetchProps {
+		loading: boolean;
+		error: string | null;
+		currentPage: number;
+		pageSize: number;
+	}
+
+	interface IDialog<T> {
+		selected: T | null;
+		modalOpen: boolean;
+	}
+
 	interface ApplicationsJobProps extends ComponentProps {
 		statusFilter?: 'all' | ApplicationJobStatusEnumType;
 	}
@@ -68,13 +80,9 @@ declare global {
 		priority?: 'low' | 'medium' | 'high';
 	}
 
-	interface TodoState {
+	interface TodoState extends FetchProps {
 		todos: TodoItem[];
-		loading: boolean;
-		error: string | null;
 		dateFilter: 'all' | 'today' | 'week' | 'overdue';
-		currentPage: number;
-		pageSize: number;
 	}
 
 	interface TodoData extends JsonData {
@@ -118,13 +126,9 @@ declare global {
 		status: ApplicationJobStatus;
 	}
 
-	interface ApplicationJobState {
+	interface ApplicationJobState extends FetchProps {
 		applicationJobs: ApplicationJob[];
-		loading: boolean;
-		error: string | null;
 		statusFilter: 'all' | ApplicationJobStatusEnumType;
-		currentPage: number;
-		pageSize: number;
 		selectedJob: ApplicationJob | null;
 		modalOpen: boolean;
 		texts: ApplicationJobTexts | null;
@@ -321,6 +325,29 @@ declare global {
 		events?: EventItem[] | null;
 		message?: string | null;
 		coverSheet?: CoverSheet | null;
+	}
+
+	// ===== EXPENSE-TYPEN =====
+	interface ExpenseItem {
+		key: string;
+		value: number;
+	}
+
+	interface ExpenseData {
+		id: number;
+		date: string;
+		items: ExpenseItem[];
+		store?: string;
+	}
+
+	interface ExpenseState extends FetchProps {
+		expenses: ExpenseData[];
+		selectedExpense: ExpenseData | null;
+		modalOpen: boolean;
+	}
+
+	interface ExpenseJsonData extends JsonData {
+		expenses: ExpenseData[];
 	}
 }
 

@@ -8,6 +8,7 @@ import { Callout } from 'nextra/components'
 import Todo from '@/components/todo';
 import CVSettings from '@/components/cvSettings';
 import ApplicationsJob from '@/components/applicationJob';
+import Expense from '@/components/expense';
 
 const themeComponents = getThemeComponents();
 
@@ -37,5 +38,6 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 		Todo,
 		CVSettings,
 		ApplicationsJob,
+		Expense,
 	};
 }
