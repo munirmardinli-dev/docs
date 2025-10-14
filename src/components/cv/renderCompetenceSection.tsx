@@ -1,4 +1,5 @@
 import { View, Text } from '@react-pdf/renderer';
+
 import { styles } from '@/styles/cv';
 
 export const renderCompetenceSection = (

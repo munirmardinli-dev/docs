@@ -1,6 +1,7 @@
 'use client';
 import { Page, Text, View, Image } from '@react-pdf/renderer';
 import React, { useEffect, useState } from 'react';
+
 import { styles } from '@/styles/cv';
 import { get } from '@/utils/get';
 import { renderCompetenceSection } from '@/components/cv/renderCompetenceSection';

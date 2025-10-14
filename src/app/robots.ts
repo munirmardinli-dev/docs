@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next/types';
-
+import packageJson from 'package.json';
 export const dynamic = 'force-static';
 
 class RobotsManager {
@@ -10,8 +10,8 @@ class RobotsManager {
 				allow: ['/'],
 				disallow: ['/admin', '/privacy', '/user/*'],
 			},
-			sitemap: process.env.NEXT_PUBLIC_UI_URL + `/sitemap.xml`,
-			host: process.env.NEXT_PUBLIC_UI_URL,
+			sitemap: packageJson.preview.uiUrl + `/sitemap.xml`,
+			host: packageJson.preview.uiUrl,
 		};
 	}
 }

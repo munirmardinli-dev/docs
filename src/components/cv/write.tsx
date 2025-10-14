@@ -2,6 +2,7 @@
 import { Page, Text, View } from '@react-pdf/renderer';
 import dayjs from 'dayjs';
 import React, { ReactElement, useEffect, useState } from 'react';
+
 import { get } from '@/utils/get';
 import { styles } from '@/styles/cv';
 

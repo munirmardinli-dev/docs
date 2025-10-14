@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
-import PackageJson from 'package.json';
+import packageJson from 'package.json';
 
 export const dynamic = 'force-static';
 
@@ -45,8 +45,8 @@ class RSSRouterManager {
 
 	static generateRSS(): void {
 
-		if (!process.env.NEXT_PUBLIC_UI_URL) {
-			console.error('NEXT_PUBLIC_UI_URL environment variable is not set');
+		if (packageJson.preview.uiUrl) {
+			console.error('UI_URL environment variable is not set');
 			return;
 		}
 
@@ -82,7 +82,7 @@ class RSSRouterManager {
 					frontmatter.description || '',
 					frontmatter.author || 'Unknown',
 					new Date(frontmatter.date),
-					`${process.env.NEXT_PUBLIC_UI_URL}${url}`
+					`${packageJson.preview.uiUrl}${url}`
 				);
 			})
 			.filter(
@@ -94,10 +94,10 @@ class RSSRouterManager {
 		const rssContent = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>${PackageJson.name}</title>
-    <description>${PackageJson.description}</description>
-    <link>${process.env.NEXT_PUBLIC_UI_URL}</link>
-    <atom:link href="${process.env.NEXT_PUBLIC_UI_URL}/rss.xml" rel="self" type="application/rss+xml" />
+    <title>${packageJson.name}</title>
+    <description>${packageJson.description}</description>
+    <link>${packageJson.preview.uiUrl}</link>
+    <atom:link href="${packageJson.preview.uiUrl}/rss.xml" rel="self" type="application/rss+xml" />
     <language>de-DE</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
     ${rssItems

@@ -29,7 +29,7 @@
     "directory": "Munir Mardinli"
   },
   "preview": {
-    "uiUrl": "https://docs.munirmardinli.de",
+    "uiUrl": "https://homelab-prod.synology.me",
     "headerTitel": "Docs",
     "repoUrl": "https://github.com/munirmardinli-dev/docs"
   },
@@ -55,41 +55,33 @@
   },
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build && npm run rss",
+    "build": "next build",
     "start": "next start",
-    "rss": "tsx src/app/rss.xml/router.ts",
-    "postbuild": "pagefind --site .next/server/app --output-path out/_pagefind",
-    "dev:docker": "docker compose up -d"
+    "postbuild": "pagefind --site .next/server/app --output-path out/_pagefind"
   },
   "dependencies": {
     "@emotion/react": "11.14.0",
     "@emotion/styled": "11.14.1",
     "@mui/icons-material": "7.3.2",
     "@mui/material": "7.3.2",
-    "@mui/x-data-grid": "8.11.3",
-    "@mui/x-date-pickers": "8.11.2",
     "dayjs": "1.11.18",
-    "dotenv": "^17.2.2",
     "katex": "0.16.22",
-    "@react-pdf/renderer": "^4.2.2",
     "next": "15.5.3",
     "nextra": "4.5.0",
     "nextra-theme-docs": "4.5.0",
     "react": "19.1.1",
-    "react-big-calendar": "1.19.4",
-    "react-dom": "19.1.1"
+    "react-dom": "19.1.1",
+    "@react-pdf/renderer": "^4.2.2",
+    "@mui/x-data-grid": "8.11.3",
+    "@mui/x-date-pickers": "8.11.2"
   },
   "devDependencies": {
-    "@changesets/cli": "2.29.7",
     "@graphql-eslint/eslint-plugin": "4.4.0",
     "@types/node": "24.5.2",
     "@types/react": "19.1.12",
-    "@types/react-big-calendar": "1.16.3",
     "@types/react-dom": "^19.1.9",
     "gray-matter": "4.0.3",
     "pagefind": "^1.4.0",
-    "ts-node": "^10.9.1",
-    "tsx": "4.20.5",
     "typescript": "5.9.2"
   }
 }

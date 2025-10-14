@@ -1,6 +1,7 @@
 'use client';
 import { Page, Image } from '@react-pdf/renderer';
 import { ReactElement, useEffect, useState } from 'react';
+
 import { get } from '@/utils/get';
 
 export default function Certification(): ReactElement {

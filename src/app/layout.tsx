@@ -1,12 +1,12 @@
 'use client';
 import 'nextra-theme-docs/style.css';
 import 'katex/dist/katex.min.css';
-import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { Layout, Navbar } from 'nextra-theme-docs';
 import { getPageMap } from 'nextra/page-map';
 import { Head } from 'nextra/components/head';
 import { Search } from 'nextra/components/search';
 import { ThemeProvider } from '@mui/material/styles';
+
 import { GoogleTagManager, GoogleTagManagerNoScript } from '@/utils/googleTag';
 import DayjsManager from '@/utils/dayjs';
 import ClientLocalizationProvider from '@/utils/clientLocalizationProvider';
@@ -14,7 +14,7 @@ import theme from '@/utils/theme';
 import FontManager from '@/utils/font';
 import '@/app/_metadata';
 import packageJson from 'package.json';
-import { CssBaseline } from '@mui/material';
+import CssBaseline from '@mui/material/CssBaseline';
 
 DayjsManager.initialize();
 
@@ -37,11 +37,11 @@ export default async function RootLayout({
 				<link
 					rel="sitemap"
 					type="application/xml"
-					href={`${process.env.NEXT_PUBLIC_UI_URL}/sitemap.xml`}
+					href={`${packageJson.preview.uiUrl}/sitemap.xml`}
 				/>
 				<link
 					rel="manifest"
-					href={`${process.env.NEXT_PUBLIC_UI_URL}/manifest.webmanifest`}
+					href={`${packageJson.preview.uiUrl}/manifest.webmanifest`}
 				/>
 				<meta name="robots" content="index, follow" />
 				<meta name="theme-color" content="#000000" />

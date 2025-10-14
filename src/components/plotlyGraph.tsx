@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import { type JSX, useEffect, useRef } from 'react';
 
 export default function PlotlyGraph({
   props: { graph },
@@ -8,7 +8,7 @@ export default function PlotlyGraph({
   props: {
     graph: PlotlyGraphProps;
   };
-}): React.JSX.Element {
+}): JSX.Element {
   const graphRef = useRef<HTMLDivElement>(null);
   const isInitialized = useRef(false);
 

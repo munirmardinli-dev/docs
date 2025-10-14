@@ -22,6 +22,7 @@ const nextConfig: NextConfig = {
 	output: 'export',
 	reactStrictMode: true,
 	trailingSlash: true,
+	swcMinify: true,
 	compiler: {
 		removeConsole: {
 			exclude: ['error'],
@@ -29,7 +30,6 @@ const nextConfig: NextConfig = {
 	},
 	images: {
 		unoptimized: true,
-		domains: [process.env.NEXT_PUBLIC_UI_URL, process.env.NEXT_PUBLIC_HOMELAB_URL || 'http://localhost:3000'],
 	},
 	turbopack: {
 		resolveAlias: {
