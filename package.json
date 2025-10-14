@@ -72,7 +72,7 @@
     "react": "19.1.1",
     "react-dom": "19.1.1",
     "@react-pdf/renderer": "^4.2.2",
-    "@mui/x-data-grid": "8.11.3",
+    "@mui/x-data-grid": "8.14.0",
     "@mui/x-date-pickers": "8.11.2"
   },
   "devDependencies": {
