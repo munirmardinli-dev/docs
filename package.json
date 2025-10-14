@@ -65,7 +65,7 @@
     "@mui/icons-material": "7.3.2",
     "@mui/material": "7.3.2",
     "dayjs": "1.11.18",
-    "katex": "0.16.22",
+    "katex": "0.16.25",
     "next": "15.5.3",
     "nextra": "4.5.0",
     "nextra-theme-docs": "4.5.0",
