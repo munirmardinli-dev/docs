@@ -73,7 +73,7 @@
     "react-dom": "19.1.1",
     "@react-pdf/renderer": "^4.2.2",
     "@mui/x-data-grid": "8.11.3",
-    "@mui/x-date-pickers": "8.11.2"
+    "@mui/x-date-pickers": "8.14.0"
   },
   "devDependencies": {
     "@graphql-eslint/eslint-plugin": "4.4.0",
