@@ -1,4 +1,27 @@
 {
- "preferredLanguage": "typescript",
- "formatOnSave": true
+	"preferredLanguage": "typescript",
+	"typescript": {
+		"preferences": {
+			"includePackageJsonAutoImports": "auto",
+			"includeCompletionsForImportStatements": true,
+			"includeCompletionsWithSnippetText": true,
+			"includeCompletionsWithClassMemberSnippets": true
+		}
+	},
+	"javascript": {
+		"preferences": {
+			"includePackageJsonAutoImports": "auto",
+			"includeCompletionsForImportStatements": true,
+			"includeCompletionsWithSnippetText": true,
+			"includeCompletionsWithClassMemberSnippets": true
+		}
+	},
+	"editor": {
+		"formatOnSave": true,
+		"formatOnPaste": true,
+		"codeActionsOnSave": {
+			"source.fixAll": "explicit",
+			"source.organizeImports": "explicit"
+		}
+	}
 }

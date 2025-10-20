@@ -139,3 +139,5 @@ vite.config.ts.timestamp-*
 .qodo
 _pagefind
 .trunk
+
+public/

@@ -3,12 +3,8 @@ import type { MDXComponents } from 'mdx/types';
 import Image, { ImageProps } from 'next/image';
 import Quote from '@/components/quote';
 import PlotlyGraph from '@/components/plotlyGraph';
-import MyCalendar from '@/components/calendar';
 import { Callout } from 'nextra/components'
-import Todo from '@/components/todo';
 import CVSettings from '@/components/cvSettings';
-import ApplicationsJob from '@/components/applicationJob';
-import Expense from '@/components/expense';
 
 const themeComponents = getThemeComponents();
 
@@ -33,11 +29,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 		),
 		Quote,
 		PlotlyGraph,
-		MyCalendar,
 		Callout,
-		Todo,
 		CVSettings,
-		ApplicationsJob,
-		Expense,
 	};
 }

@@ -1,5 +1,17 @@
 {
- "theme": "dark",
- "autoComplete": true,
- "preferredModel": "gpt-4"
+	"theme": "dark",
+	"autoComplete": true,
+	"preferredModel": "gpt-4",
+	"codeActions": {
+		"enabled": true,
+		"autoApply": true
+	},
+	"inlineChat": {
+		"enabled": true,
+		"autoComplete": true
+	},
+	"composer": {
+		"enabled": true,
+		"autoComplete": true
+	}
 }

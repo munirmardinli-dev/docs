@@ -1,26 +1,71 @@
 {
- // Theme & Editor
- "workbench.colorTheme": "Default Dark Modern",
- "editor.fontFamily": "'Fira Code', 'Courier New', monospace",
- "editor.fontSize": 16,
- "editor.fontLigatures": true,
- "editor.tabSize": 2,
- "editor.formatOnSave": true,
+  // Cursor AI Settings
+  "cursor.ai.model": "gpt-4-turbo",
+  "cursor.experimental.sync": true,
+  "cursor.ai.enableCodeActions": true,
+  "cursor.ai.enableInlineChat": true,
+  "cursor.ai.enableComposer": true,
+  "cursor.ai.autoComplete": true,
+  "cursor.ai.contextLength": 128000,
 
- // Prettier
- "prettier.singleQuote": true,
- "prettier.useTabs": false,
- "editor.defaultFormatter": "esbenp.prettier-vscode",
+  // Editor Settings
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.organizeImports": "explicit"
+  },
+  "editor.suggestSelection": "first",
+  "editor.acceptSuggestionOnCommitCharacter": false,
+  "editor.acceptSuggestionOnEnter": "on",
+  "editor.wordWrap": "on",
+  "editor.minimap.enabled": true,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": true,
 
- // Terminal
- "terminal.integrated.fontSize": 14,
- "terminal.integrated.defaultProfile.windows": "Git Bash",
+  // TypeScript/JavaScript Settings
+  "typescript.preferences.includePackageJsonAutoImports": "auto",
+  "typescript.suggest.autoImports": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "javascript.suggest.autoImports": true,
+  "javascript.updateImportsOnFileMove.enabled": "always",
 
- // Cursor-settings
- "cursor.ai.model": "gpt-4-turbo",
- "cursor.experimental.sync": true,
+  // File Settings
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 1000,
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
 
- // Git
- "git.autofetch": true,
- "git.postCommitCommand": "sync"
+  // Git Settings
+  "git.autofetch": true,
+  "git.postCommitCommand": "sync",
+  "git.enableSmartCommit": true,
+  "git.confirmSync": false,
+  "git.autofetchPeriod": 180,
+
+  // Terminal Settings
+  "terminal.integrated.defaultProfile.windows": "Git Bash",
+  "terminal.integrated.fontSize": 14,
+
+  // Search Settings
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/out": true,
+    "**/.next": true,
+    "**/dist": true,
+    "**/build": true
+  },
+
+  // File Watcher Settings
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/out/**": true,
+    "**/.next/**": true,
+    "**/dist/**": true,
+    "**/build/**": true
+  }
 }
