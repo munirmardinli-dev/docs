@@ -1,7 +1,6 @@
 'use client';
 import 'nextra-theme-docs/style.css';
 import 'katex/dist/katex.min.css';
-import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { Layout, Navbar } from 'nextra-theme-docs';
 import { getPageMap } from 'nextra/page-map';
 import { Head } from 'nextra/components/head';
