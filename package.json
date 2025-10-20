@@ -69,7 +69,7 @@
     "@mui/x-data-grid": "8.11.3",
     "@mui/x-date-pickers": "8.11.2",
     "dayjs": "1.11.18",
-    "dotenv": "^17.2.2",
+    "dotenv": "^17.2.3",
     "katex": "0.16.22",
     "@react-pdf/renderer": "^4.2.2",
     "next": "15.5.3",
